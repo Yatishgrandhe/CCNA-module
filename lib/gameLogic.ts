@@ -34,12 +34,19 @@ export function updateGameStats(
   isCorrect: boolean,
   scoreGained: number
 ): GameStats {
+  const newStreak = isCorrect ? currentStats.streak + 1 : 0;
+  const newQuestionsAnswered = currentStats.questionsAnswered + 1;
+  const newCorrectAnswers = isCorrect ? currentStats.correctAnswers + 1 : currentStats.correctAnswers;
+  const newScore = currentStats.score + scoreGained;
+  
   return {
     ...currentStats,
-    score: currentStats.score + scoreGained,
-    streak: isCorrect ? currentStats.streak + 1 : 0,
-    questionsAnswered: currentStats.questionsAnswered + 1,
-    correctAnswers: isCorrect ? currentStats.correctAnswers + 1 : currentStats.correctAnswers
+    score: newScore,
+    streak: newStreak,
+    bestStreak: Math.max(currentStats.bestStreak, newStreak),
+    questionsAnswered: newQuestionsAnswered,
+    correctAnswers: newCorrectAnswers,
+    averageScore: Math.round(newScore / newQuestionsAnswered)
   };
 }
 

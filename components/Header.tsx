@@ -9,7 +9,8 @@ interface HeaderProps {
 }
 
 export default function Header({ stats, currentQuestion, totalQuestions }: HeaderProps) {
-  const progressPercentage = (currentQuestion / totalQuestions) * 100;
+  // Progress should be based on questions answered, not current question position
+  const progressPercentage = (stats.questionsAnswered / totalQuestions) * 100;
 
   return (
     <header className="bg-gimkit-primary text-gimkit-text-light shadow-medium">

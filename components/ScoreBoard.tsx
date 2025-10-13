@@ -25,9 +25,14 @@ export default function ScoreBoard({ stats, className = '' }: ScoreBoardProps) {
           <div className="text-sm font-medium text-gimkit-text-muted uppercase tracking-wider">
             Score
           </div>
+          {stats.questionsAnswered > 0 && (
+            <div className="text-xs text-gimkit-text-muted mt-1">
+              Avg: {stats.averageScore}
+            </div>
+          )}
         </div>
         
-        {/* Streak */}
+        {/* Current Streak */}
         <div className="text-center">
           {stats.streak > 0 ? (
             <div className="streak-badge mb-2">
@@ -39,8 +44,13 @@ export default function ScoreBoard({ stats, className = '' }: ScoreBoardProps) {
             </div>
           )}
           <div className="text-sm font-medium text-gimkit-text-muted uppercase tracking-wider">
-            Streak
+            Current Streak
           </div>
+          {stats.bestStreak > 0 && (
+            <div className="text-xs text-gimkit-text-muted mt-1">
+              Best: {stats.bestStreak}
+            </div>
+          )}
         </div>
         
         {/* Questions Answered */}
@@ -50,6 +60,9 @@ export default function ScoreBoard({ stats, className = '' }: ScoreBoardProps) {
           </div>
           <div className="text-sm font-medium text-gimkit-text-muted uppercase tracking-wider">
             Answered
+          </div>
+          <div className="text-xs text-gimkit-text-muted mt-1">
+            of {stats.totalQuestions}
           </div>
         </div>
         
@@ -64,6 +77,9 @@ export default function ScoreBoard({ stats, className = '' }: ScoreBoardProps) {
           </div>
           <div className="text-sm font-medium text-gimkit-text-muted uppercase tracking-wider">
             Accuracy
+          </div>
+          <div className="text-xs text-gimkit-text-muted mt-1">
+            {stats.correctAnswers} correct
           </div>
         </div>
       </div>

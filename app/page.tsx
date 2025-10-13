@@ -19,9 +19,12 @@ export default function Home() {
   const [gameStats, setGameStats] = useState<GameStats>({
     score: 0,
     streak: 0,
+    bestStreak: 0,
     questionsAnswered: 0,
     correctAnswers: 0,
-    totalQuestions: QUESTIONS_DATA.length
+    totalQuestions: QUESTIONS_DATA.length,
+    averageScore: 0,
+    timeStarted: Date.now()
   });
 
   // Initialize questions on mount

@@ -25,9 +25,12 @@ export interface QuizState {
 export interface GameStats {
   score: number;
   streak: number;
+  bestStreak: number;
   questionsAnswered: number;
   correctAnswers: number;
   totalQuestions: number;
+  averageScore: number;
+  timeStarted: number;
 }
 
 export interface GameSettings {
