@@ -1,0 +1,1357 @@
+CCNA1 - Introduction to Networks (ITN) Questions and Answers
+Here are the questions and answers from the provided document, reformatted so that the
+correct, bolded answer is always option 'a.' and preceded by an '!' symbol.
+1. What is the purpose of the OSI physical layer?
+o
+
+! transmitting bits across the local media
+
+o
+
+controlling access to media
+
+o
+
+performing error detection on received frames
+
+o
+
+exchanging frames between nodes over physical network media
+
+2. Why are two strands of fiber used for a single fiber optic connection?
+o
+
+! They allow for full-duplex connectivity.
+
+o
+
+The two strands allow the data to travel for longer distances without
+degrading.
+
+o
+
+They prevent crosstalk from causing interference on the connection.
+
+o
+
+They increase the speed at which the data can travel.
+
+3. Which characteristic describes crosstalk?
+o
+
+! the distortion of the transmitted messages from signals carried in
+adjacent wires
+
+o
+
+the distortion of the network signal from fluorescent lighting
+
+o
+
+the weakening of the network signal over long cable lengths
+
+o
+
+the loss of wireless signal over excessive distance from the access point
+
+4. Which procedure is used to reduce the effect of crosstalk in copper cables?
+o
+
+! twisting opposing circuit wire pairs together
+
+o
+
+requiring proper grounding connections
+
+o
+
+wrapping the bundle of wires with metallic shielding
+
+o
+
+designing a cable infrastructure to avoid crosstalk interference
+
+6. A network administrator is measuring the transfer of bits across the company
+backbone for a mission critical financial application. The administrator notices that
+the network throughput appears lower than the bandwidth expected. Which three
+factors could influence the differences in throughput? (Choose three.)
+o
+
+! the amount of traffic that is currently crossing the network
+
+o
+
+! the type of traffic that is crossing the network
+
+o
+
+! the latency that is created by the number of network devices that the
+data is crossing
+
+o
+
+the sophistication of the encapsulation method applied to the data
+
+o
+
+the bandwidth of the WAN connection to the Internet
+
+o
+
+the reliability of the gigabit Ethernet infrastructure of the backbone
+
+7. What are two characteristics of fiber-optic cable? (Choose two.)
+o
+
+! It is not affected by EMI or RFI.
+
+o
+
+! It is more expensive than UTP cabling is.
+
+o
+
+Each pair of cables is wrapped in metallic foil.
+
+o
+
+It combines the technique of cancellation, shielding, and twisting to protect
+data.
+
+o
+
+It typically contains 4 pairs of fiber-optic wires.
+
+8. What is a primary role of the Physical layer in transmitting data on the network?
+o
+
+! create the signals that represent the bits in each frame on to the media
+
+o
+
+provide physical addressing to the devices
+
+o
+
+determine the path packets take through the network
+
+o
+
+control data access to the media
+
+9. With the use of unshielded twisted-pair copper wire in a network, what causes
+crosstalk within the cable pairs?
+o
+
+! the magnetic field around the adjacent pairs of wire
+
+o
+
+the use of braided wire to shield the adjacent wire pairs
+
+o
+
+the reflection of the electrical wave back from the far end of the cable
+
+o
+
+the collision caused by two nodes trying to use the media simultaneously
+
+10. Refer to the graphic. What type of cabling is shown? * ! fiber
+o
+
+STP
+
+o
+
+UTP
+
+o
+
+coax
+
+11. In addition to the cable length, what two factors could interfere with the
+communication carried over UTP cables? (Choose two.)
+o
+
+! crosstalk
+
+o
+
+! electromagnetic interference
+
+o
+
+bandwidth
+
+o
+
+size of the network
+
+o
+
+signal modulation technique
+
+12. Refer to the graphic. What type of cabling is shown? * ! UTP
+o
+
+STP
+
+o
+
+coax
+
+o
+
+fiber
+
+13. Which two devices commonly affect wireless networks? (Choose two.)
+o
+
+! cordless phones
+
+o
+
+! microwaves
+
+o
+
+Blu-ray players
+
+o
+
+home theaters
+
+o
+
+incandescent light bulbs
+
+o
+
+external hard drives
+
+14. Which two statements describe the services provided by the data link layer?
+(Choose two.)
+o
+
+! It manages the access of frames to the network media.
+
+o
+
+! It packages various Layer 3 PDUs into a frame format that is compatible
+with the network interface.
+
+o
+
+It defines the end-to-end delivery addressing scheme.
+
+o
+
+It maintains the path between the source and destination devices during the
+data transmission.
+
+o
+
+It provides reliable delivery through link establishment and flow control.
+
+o
+
+It ensures that application data will be transmitted according to the
+prioritization.
+
+15. What is the function of the CRC value that is found in the FCS field of a frame?
+o
+
+! to verify the integrity of the received frame
+
+o
+
+to verify the physical address in the frame
+
+o
+
+to verify the logical address in the frame
+
+o
+
+to compute the checksum header for the data field in the frame
+
+16. What is contained in the trailer of a data-link frame?
+o
+
+! error detection
+
+o
+
+logical address
+
+o
+
+physical address
+
+o
+
+data
+
+17. Which statement describes a characteristic of the frame header fields of the data
+link layer?
+o
+
+! They vary depending on protocols.
+
+o
+
+They all include the flow control and logical connection fields.
+
+o
+
+Ethernet frame header fields contain Layer 3 source and destination
+addresses.
+
+o
+
+They include information on user applications.
+
+18. A network team is comparing physical WAN topologies for connecting remote sites
+to a headquarters building. Which topology provides high availability and connects
+some, but not all, remote sites?
+o
+
+! partial mesh
+
+o
+
+mesh
+
+o
+
+hub and spoke
+
+o
+
+point-to-point
+
+19. Which two fields or features does Ethernet examine to determine if a received frame
+is passed to the data link layer or discarded by the NIC? (Choose two.)
+o
+
+! Frame Check Sequence
+
+o
+
+! minimum frame size
+
+o
+
+auto-MDIX
+
+o
+
+CEF
+
+o
+
+source MAC address
+
+20. Which media communication type does not require media arbitration in the data
+link layer?
+o
+
+! full-duplex
+
+o
+
+deterministic
+
+o
+
+half-duplex
+
+o
+
+controlled access
+
+21. Which statement describes an extended star topology?
+o
+
+! End devices connect to a central intermediate device, which in turn
+connects to other central intermediate devices.
+
+o
+
+End devices are connected together by a bus and each bus connects to a
+central intermediate device.
+
+o
+
+Each end system is connected to its respective neighbor via an intermediate
+device.
+
+o
+
+All end and intermediate devices are connected in a chain to each other.
+
+22. What is a characteristic of the LLC sublayer?
+o
+
+! It places information in the frame allowing multiple Layer 3 protocols to use
+the same network interface and media.
+
+o
+
+It provides the logical addressing required that identifies the device.
+
+o
+
+It provides delimitation of data according to the physical signaling
+requirements of the medium.
+
+o
+
+It defines software processes that provide services to the physical layer.
+
+23. What are three ways that media access control is used in networking? (Choose
+three.)
+o
+
+! Ethernet utilizes CSMA/CD.
+
+o
+
+! Media access control provides placement of data frames onto the media.
+
+o
+
+! Data link layer protocols define the rules for access to different media.
+
+o
+
+Contention-based access is also known as deterministic.
+
+o
+
+802.11 utilizes CSMA/CD.
+
+o
+
+Networks with controlled access have reduced performance due to data
+collisions.
+
+24. During the encapsulation process, what occurs at the data link layer for a PC
+connected to an Ethernet network?
+o
+
+! The physical address is added.
+
+o
+
+An IP address is added.
+
+o
+
+The logical address is added.
+
+o
+
+The process port number is added.
+
+25. What three items are contained in an Ethernet header and trailer? (Choose three.)
+
+o
+
+! source MAC address
+
+o
+
+! destination MAC address
+
+o
+
+! error-checking information
+
+o
+
+source IP address
+
+o
+
+destination IP address
+
+26. What type of communication rule would best describe CSMA/CD?
+o
+
+! access method
+
+o
+
+flow control
+
+o
+
+message encapsulation
+
+o
+
+message encoding
+
+27. Which three basic parts are common to all frame types supported by the data link
+layer? (Choose three.)
+o
+
+! header
+
+o
+
+! data
+
+o
+
+! trailer
+
+o
+
+type field
+
+o
+
+MTU size
+
+o
+
+CRC value
+
+28. Which statement is true about the CSMA/CD access method that is used in
+Ethernet?
+o
+
+! All network devices must listen before transmitting.
+
+o
+
+When a device hears a carrier signal and transmits, a collision cannot occur.
+
+o
+
+A jamming signal causes only devices that caused the collision to execute a
+backoff algorithm.
+
+o
+
+Devices involved in a collision get priority to transmit after the backoff period.
+
+29. What is the auto-MDIX feature on a switch?
+o
+
+! the automatic configuration of an interface for a straight-through or a
+crossover Ethernet cable connection
+
+o
+
+the automatic configuration of an interface for 10/100/1000 Mb/s operation
+
+o
+
+the automatic configuration of full-duplex operation over a single Ethernet
+copper or optical cable
+
+o
+
+the ability to turn a switch interface on or off accordingly if an active
+connection is detected
+
+30. Refer to the exhibit. What is the destination MAC address of the Ethernet frame as it
+leaves the web server if the final destination is PC1? [Image shows a Web Server
+(192.168.5.10, MAC: 00-60-2F-3A-07-DD) connected through a switch and two
+routers to PC1 (192.168.1.50, MAC: 00-60-2F-3A-07-AA). The router interface
+connected to the web server's network is Fa0/0 (192.168.5.1, MAC: 00-60-2F-3A-07CC).]
+o
+
+! 00-60-2F-3A-07-CC
+
+o
+
+00-60-2F-3A-07-AA
+
+o
+
+00-60-2F-3A-07-BB
+
+o
+
+00-60-2F-3A-07-DD
+
+31. A Layer 2 switch is used to switch incoming frames from a 1000BASE-T port to a port
+connected to a 100Base-T network. Which method of memory buffering would work
+best for this task?
+o
+
+! shared memory buffering
+
+o
+
+port-based buffering
+
+o
+
+level 1 cache buffering
+
+o
+
+fixed configuration buffering
+
+32. What are two examples of the cut-through switching method? (Choose two.)
+o
+
+! fast-forward switching
+
+o
+
+! fragment-free switching
+
+o
+
+store-and-forward switching
+
+o
+
+CRC switching
+
+o
+
+QOS switching
+
+33. Which frame forwarding method receives the entire frame and performs a CRC
+check to detect errors before forwarding the frame?
+o
+
+! store-and-forward switching
+
+o
+
+cut-through switching
+
+o
+
+fragment-free switching
+
+o
+
+fast-forward switching
+
+34. What is the purpose of the FCS field in a frame?
+o
+
+! to determine if errors occurred in the transmission and reception
+
+o
+
+to obtain the MAC address of the sending node
+
+o
+
+to verify the logical address of the sending node
+
+o
+
+to compute the CRC header for the data field
+
+35. Which switching method has the lowest level of latency?
+o
+
+! fast-forward
+
+o
+
+cut-through
+
+o
+
+store-and-forward
+
+o
+
+fragment-free
+
+36. A network administrator is connecting two modern switches using a straightthrough cable. The switches are new and have never been configured. Which three
+statements are correct about the final result of the connection? (Choose three.)
+o
+
+! The link between the switches will work at the fastest speed that is
+supported by both switches.
+
+o
+
+! The link between switches will work as full-duplex.
+
+o
+
+! The auto-MDIX feature will configure the interfaces eliminating the need for
+a crossover cable.
+
+o
+
+If both switches support different speeds, they will each work at their own
+fastest speed.
+
+o
+
+The connection will not be possible unless the administrator changes the
+cable to a crossover cable.
+
+o
+
+The duplex capability has to be manually configured because it cannot be
+negotiated.
+
+37. Which advantage does the store-and-forward switching method have compared
+with the cut-through switching method?
+o
+
+! frame error checking
+
+o
+
+collision detecting
+
+o
+
+faster frame forwarding
+
+o
+
+frame forwarding using IPv4 Layer 3 and 4 information
+
+38. When the store-and-forward method of switching is in use, what part of the Ethernet
+frame is used to perform an error check?
+o
+
+! CRC in the trailer
+
+o
+
+source MAC address in the header
+
+o
+
+destination MAC address in the header
+
+o
+
+protocol type in the header
+
+39. Which switching method uses the CRC value in a frame?
+o
+
+! store-and-forward
+
+o
+
+cut-through
+
+o
+
+fast-forward
+
+o
+
+fragment-free
+
+40. What are two actions performed by a Cisco switch? (Choose two.)
+
+o
+
+! using the source MAC addresses of frames to build and maintain a MAC
+address table
+
+o
+
+! utilizing the MAC address table to forward frames via the destination
+MAC address
+
+o
+
+building a routing table that is based on the first IP address in the frame
+header
+
+o
+
+forwarding frames with unknown destination IP addresses to the default
+gateway
+
+o
+
+examining the destination MAC address to add new entries to the MAC
+address table
+
+41. Which two statements describe features or functions of the logical link control
+sublayer in Ethernet standards? (Choose two.)
+o
+
+! Logical link control is implemented in software.
+
+o
+
+! The data link layer uses LLC to communicate with the upper layers of the
+protocol suite.
+
+o
+
+Logical link control is specified in the IEEE 802.3 standard.
+
+o
+
+The LLC sublayer adds a header and a trailer to the data.
+
+o
+
+The LLC sublayer is responsible for the placement and retrieval of frames on
+and off the media.
+
+42. What is the auto-MDIX feature?
+o
+
+! It enables a device to automatically configure an interface to use a straightthrough or a crossover cable.
+
+o
+
+It enables a device to automatically configure the duplex settings of a
+segment.
+
+o
+
+It enables a device to automatically configure the speed of its interface.
+
+o
+
+It enables a switch to dynamically select the forwarding method.
+
+43. What is one advantage of using the cut-through switching method instead of the
+store-and-forward switching method?
+
+o
+
+! has a lower latency appropriate for high-performance computing
+applications
+
+o
+
+has a positive impact on bandwidth by dropping most of the invalid frames
+
+o
+
+makes a fast forwarding decision based on the source MAC address of the
+frame
+
+o
+
+provides the flexibility to support any mix of Ethernet speeds
+
+44. Which is a multicast MAC address?
+o
+
+! 01-00-5E-00-00-03
+
+o
+
+FF-FF-FF-FF-FF-FF
+
+o
+
+5C-26-0A-4B-19-3E
+
+o
+
+00-26-0F-4B-00-3E
+
+45. Refer to the exhibit. What is wrong with the displayed termination? [Image shows an
+RJ-45 connector where the cable jacket ends well before the crimp point, leaving an
+excessive length of untwisted wires exposed.]
+o
+
+! The untwisted length of each wire is too long.
+
+o
+
+The woven copper braid should not have been removed.
+
+o
+
+The wrong type of connector is being used.
+
+o
+
+The wires are too thick for the connector that is used.
+
+46. Refer to the exhibit. The PC is connected to the console port of the switch. All the
+other connections are made through FastEthernet links. Which types of UTP cables
+can be used to connect the devices? [Image shows a PC connected to a Switch (link
+1), which is connected to a Router (link 2), which is connected to another Router
+(link 3). The PC-Switch link is specified as the console port.]
+o
+
+! 1 - rollover, 2 - straight-through, 3 - crossover
+
+o
+
+1 - rollover, 2 - crossover, 3 - straight-through
+
+o
+
+1 - crossover, 2 - rollover, 3 - straight-through
+
+o
+
+1 - crossover, 2 - straight-through, 3 - rollover
+
+48. What does the term "attenuation" mean in data communication?
+o
+
+! loss of signal strength as distance increases
+
+o
+
+time for a signal to reach its destination
+
+o
+
+leakage of signals from one cable pair to another
+
+o
+
+strengthening of a signal by a networking device
+
+49. What makes fiber preferable to copper cabling for interconnecting buildings?
+(Choose three.)
+o
+
+! greater distances per cable run
+
+o
+
+! limited susceptibility to EMI/RFI
+
+o
+
+! greater bandwidth potential
+
+o
+
+lower installation cost
+
+o
+
+durable connections
+
+o
+
+easily terminated
+
+50. What OSI physical layer term describes the process by which one wave modifies
+another wave?
+o
+
+! modulation
+
+o
+
+IEEE
+
+o
+
+EIA/TIA
+
+o
+
+air
+
+51. What OSI physical layer term describes the capacity at which a medium can carry
+data?
+o
+
+! bandwidth
+
+o
+
+IEEE
+
+o
+
+EIA/TIA
+
+o
+
+air
+
+53. What OSI physical layer term describes the measure of the transfer of bits across a
+medium over a given period of time?
+o
+
+! throughput
+
+o
+
+bandwidth
+
+o
+
+latency
+
+o
+
+goodput
+
+54. What OSI physical layer term describes the amount of time, including delays, for
+data to travel from one point to another?
+o
+
+! latency
+
+o
+
+bandwidth
+
+o
+
+throughput
+
+o
+
+goodput
+
+55. What OSI physical layer term describes the amount of time, including delays, for
+data to travel from one point to another?
+o
+
+! latency
+
+o
+
+fiber-optic cable
+
+o
+
+air
+
+o
+
+copper cable
+
+56. What OSI physical layer term describes the measure of usable data transferred over
+a given period of time?
+o
+
+! goodput
+
+o
+
+fiber-optic cable
+
+o
+
+air
+
+o
+
+copper cable
+
+57. What OSI physical layer term describes the physical medium which uses electrical
+pulses?
+
+o
+
+! copper cable
+
+o
+
+fiber-optic cable
+
+o
+
+air
+
+o
+
+goodput
+
+58. What OSI physical layer term describes the physical medium that uses the
+propagation of light?
+o
+
+! fiber-optic cable
+
+o
+
+goodput
+
+o
+
+latency
+
+o
+
+throughput
+
+59. What OSI physical layer term describes the physical medium for microwave
+transmissions?
+o
+
+! air
+
+o
+
+goodput
+
+o
+
+latency
+
+o
+
+throughput
+
+60. Which two functions are performed at the MAC sublayer of the OSI data link layer?
+(Choose two.)
+o
+
+! Adds Layer 2 control information to network protocol data.
+
+o
+
+! Controls the NIC responsible for sending and receiving data on the physical
+medium.
+
+o
+
+Places information in the frame that identifies which network layer protocol
+is being used for the frame.
+
+o
+
+Implements a trailer to detect transmission errors.
+
+o
+
+Enables IPv4 and IPv6 to utilize the same network interface and media.
+
+61. Which two functions are performed at the LLC sublayer of the OSI data link layer?
+(Choose two.)
+o
+
+! Enables IPv4 and IPv6 to utilize the same network interface and media.
+
+o
+
+! Places information in the frame that identifies which network layer protocol
+is being used for the frame.
+
+o
+
+Integrates various physical technologies.
+
+o
+
+Implements a process to delimit fields within a Layer 2 frame.
+
+o
+
+Controls the NIC responsible for sending and receiving data on the physical
+medium.
+
+64. Which two functions are performed at the LLC sublayer of the OSI data link layer?
+(Choose two.)
+o
+
+! Places information in the frame that identifies which network layer protocol
+is being used for the frame.
+
+o
+
+! Performs data encapsulation.
+
+o
+
+Adds Layer 2 control information to network protocol data.
+
+o
+
+Controls the NIC responsible for sending and receiving data on the physical
+medium.
+
+o
+
+Integrates various physical technologies.
+
+66. Which two functions are performed at the LLC sublayer of the OSI data link layer?
+(Choose two.)
+o
+
+! Enables IPv4 and IPv6 to utilize the same network interface and media.
+
+o
+
+! Provides synchronization between source and target nodes.
+
+o
+
+Adds Layer 2 control information to network protocol data.
+
+o
+
+Provides data link layer addressing.
+
+o
+
+Implements a trailer to detect transmission errors.
+
+68. Which two functions are performed at the LLC sublayer of the OSI data link layer?
+(Choose two.)
+
+o
+
+! Enables IPv4 and IPv6 to utilize the same network interface and media.
+
+o
+
+! Provides synchronization between source and target nodes.
+
+o
+
+Adds Layer 2 control information to network protocol data.
+
+o
+
+Integrates various physical technologies.
+
+o
+
+Implements a trailer to detect transmission errors.
+
+71. What action will occur if a switch receives a frame with the destination MAC address
+FF:FF:FF:FF:FF:FF?
+o
+
+! The switch forwards it out all ports except the ingress port.
+
+o
+
+The switch refreshes the timer on that entry.
+
+o
+
+The switch does not forward the frame.
+
+o
+
+The switch sends the frame to a connected router because the destination
+MAC address is not local.
+
+73. What action will occur if a switch receives a frame with the destination MAC address
+01:00:5E:00:00:D9?
+o
+
+! The switch forwards it out all ports except the ingress port.
+
+o
+
+The switch does not forward the frame.
+
+o
+
+The switch sends the frame to a connected router because the destination
+MAC address is not local.
+
+o
+
+The switch shares the MAC address table entry with any connected switches.
+
+74. What action will occur if a host receives a frame with a destination MAC address of
+FF:FF:FF:FF:FF:FF?
+o
+
+! The host will process the frame.
+
+o
+
+The host forwards the frame to the router.
+
+o
+
+The host sends the frame to the switch to update the MAC address table.
+
+o
+
+The host forwards the frame to all other hosts.
+
+75. What action will occur if a switch receives a frame and does have the source MAC
+address in the MAC table?
+o
+
+! The switch refreshes the timer on that entry.
+
+o
+
+The switch adds it to its MAC address table associated with the port number.
+
+o
+
+The switch forwards the frame to the associated port.
+
+o
+
+The switch sends the frame to a connected router because the destination
+MAC address is not local.
+
+76. What action will occur if a host receives a frame with a destination MAC address of
+FF:FF:FF:FF:FF:FF?
+o
+
+! The host will process the frame.
+
+o
+
+The host returns the frame to the switch.
+
+o
+
+The host replies to the switch with its own IP address.
+
+o
+
+The host forwards the frame to all other hosts.
+
+78. What action will occur if a host receives a frame with a destination MAC address it
+does not recognize?
+o
+
+! The host will discard the frame.
+
+o
+
+The host replies to the switch with its own IP address.
+
+o
+
+The host forwards the frame to all other hosts.
+
+o
+
+The host returns the frame to the switch.
+
+79. Which type of UTP cable is used to connect a PC to a switch port?
+o
+
+! straight-through
+
+o
+
+console
+
+o
+
+rollover
+
+o
+
+crossover
+
+
