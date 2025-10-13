@@ -4,6 +4,22 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Gimkit-style color palette */
+  --color-bg: #F9F9F9;
+  --color-bg-alt: #FFFFFF;
+  --color-primary: #00B8D9;
+  --color-secondary: #005F99;
+  --color-accent: #33CC66;
+  --color-error: #E74C3C;
+  --text-dark: #333333;
+  --text-light: #F5F5F5;
+  --text-muted: #666666;
+  --border-color: #E5E5E5;
+  --shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
 @layer base {
   * {
     @apply border-gray-200;
@@ -15,13 +31,13 @@
   }
   
   body {
-    @apply bg-gradient-to-br from-gimkit-primary via-gimkit-secondary to-gimkit-accent;
-    @apply text-white antialiased;
+    background-color: var(--color-bg);
+    color: var(--text-dark);
     margin: 0;
     padding: 0;
     overflow-x: hidden;
     min-height: 100vh;
-    background-attachment: fixed;
+    line-height: 1.6;
   }
   
   /* Custom scrollbar */
@@ -30,66 +46,170 @@
   }
   
   ::-webkit-scrollbar-track {
-    @apply bg-white/10 rounded-full;
+    background: var(--color-bg);
   }
   
   ::-webkit-scrollbar-thumb {
-    @apply bg-white/30 rounded-full hover:bg-white/50;
+    background: var(--color-primary);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--color-secondary);
   }
 }
 
 @layer components {
-  .glass-card {
-    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  /* Clean card design */
+  .card {
+    background: var(--color-bg-alt);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    box-shadow: var(--shadow-light);
+    padding: 1.5rem;
+    margin: 1rem 0;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
   
-  .glass-card-hover {
-    @apply glass-card transition-all duration-300 hover:bg-white/15 hover:border-white/30 hover:shadow-glow;
+  .card:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
   }
   
-  .gradient-text {
-    @apply bg-gradient-to-r from-gimkit-primary via-gimkit-secondary to-gimkit-accent bg-clip-text text-transparent;
+  .card-header {
+    background: var(--color-primary);
+    color: var(--text-light);
+    padding: 1rem 1.5rem;
+    border-radius: 12px 12px 0 0;
+    margin: -1.5rem -1.5rem 1.5rem -1.5rem;
   }
   
+  /* Button styles */
   .btn-primary {
-    @apply bg-gradient-to-r from-gimkit-primary to-gimkit-secondary text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105;
+    background: var(--color-primary);
+    color: var(--text-light);
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-light);
+  }
+  
+  .btn-primary:hover {
+    background: var(--color-secondary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-medium);
   }
   
   .btn-secondary {
-    @apply bg-white/10 backdrop-blur-sm text-white font-semibold px-6 py-3 rounded-xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 transform hover:scale-105;
+    background: var(--color-bg-alt);
+    color: var(--text-dark);
+    border: 2px solid var(--color-primary);
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
   
-  .answer-correct {
-    @apply bg-gradient-to-r from-gimkit-success to-emerald-500 text-white border-gimkit-success shadow-lg animate-pulse-green;
+  .btn-secondary:hover {
+    background: var(--color-primary);
+    color: var(--text-light);
   }
   
-  .answer-incorrect {
-    @apply bg-gradient-to-r from-gimkit-danger to-red-500 text-white border-gimkit-danger shadow-lg animate-pulse-red;
+  /* Answer option styles */
+  .answer-option {
+    background: var(--color-bg-alt);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
   }
   
-  .answer-selected {
-    @apply bg-gradient-to-r from-gimkit-primary to-gimkit-secondary text-white border-gimkit-primary shadow-glow;
+  .answer-option:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-light);
   }
   
-  .answer-default {
-    @apply bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300;
+  .answer-option.selected {
+    background: var(--color-primary);
+    color: var(--text-light);
+    border-color: var(--color-primary);
   }
   
-  .score-glow {
-    @apply relative;
+  .answer-option.correct {
+    background: var(--color-accent);
+    color: var(--text-light);
+    border-color: var(--color-accent);
   }
   
-  .score-glow::before {
-    content: '';
-    @apply absolute inset-0 rounded-2xl bg-gradient-to-r from-gimkit-primary via-gimkit-secondary to-gimkit-accent opacity-20 blur-xl -z-10;
+  .answer-option.incorrect {
+    background: var(--color-error);
+    color: var(--text-light);
+    border-color: var(--color-error);
   }
   
-  .question-number {
-    @apply inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-gimkit-primary to-gimkit-secondary rounded-full text-white font-bold text-sm shadow-lg;
+  /* Progress bar */
+  .progress-bar {
+    height: 8px;
+    background: var(--border-color);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 0.5rem 0;
   }
   
-  .streak-indicator {
-    @apply inline-flex items-center px-3 py-1 bg-gradient-to-r from-gimkit-warning to-orange-500 rounded-full text-white font-semibold text-sm shadow-lg animate-pulse;
+  .progress-fill {
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 0.3s ease;
+    border-radius: 4px;
+  }
+  
+  /* Question number badge */
+  .question-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    background: var(--color-primary);
+    color: var(--text-light);
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+  
+  /* Streak indicator */
+  .streak-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.25rem 0.75rem;
+    background: var(--color-accent);
+    color: var(--text-light);
+    border-radius: 1rem;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+  
+  /* Grid layout for answer options */
+  .options-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  
+  @media (max-width: 640px) {
+    .options-grid {
+      grid-template-columns: 1fr;
+    }
   }
 }

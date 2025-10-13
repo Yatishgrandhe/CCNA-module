@@ -5,6 +5,7 @@ import { Question, QuizState, GameStats } from '@/types';
 import { shuffleQuestions, validateAnswer, calculateScore, updateGameStats, DEFAULT_GAME_SETTINGS } from '@/lib/gameLogic';
 import QuizCard from '@/components/QuizCard';
 import ScoreBoard from '@/components/ScoreBoard';
+import Header from '@/components/Header';
 
 import { QUESTIONS_DATA } from '@/data/questions';
 
@@ -99,57 +100,34 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="text-center mb-12 animate-slide-down">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-gimkit-primary to-gimkit-secondary rounded-full mb-6 shadow-glow animate-float">
-            <span className="text-4xl">🎯</span>
+    <div className="min-h-screen">
+      {/* Fixed Header */}
+      <Header 
+        stats={gameStats}
+        currentQuestion={currentQuestionIndex + 1}
+        totalQuestions={questions.length}
+      />
+
+      {/* Main Content */}
+      <div className="p-4 md:p-8 pt-8">
+        <div className="max-w-6xl mx-auto">
+          {/* Score Board */}
+          <div className="mb-8">
+            <ScoreBoard stats={gameStats} />
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-6 animate-bounce-in">
-            CCNA Quiz
-          </h1>
-          <p className="text-white/80 text-xl md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
-            Master networking concepts with this interactive quiz game. Challenge yourself with 69+ CCNA questions!
-          </p>
-        </div>
 
-        {/* Score Board */}
-        <div className="mb-12">
-          <ScoreBoard stats={gameStats} />
-        </div>
-
-        {/* Quiz Card */}
-        <div className="mb-12">
-          <QuizCard
-            question={currentQuestion}
-            selectedAnswers={selectedAnswers}
-            isAnswered={isAnswered}
-            showFeedback={showFeedback}
-            isCooldown={isCooldown}
-            onAnswerSelect={handleAnswerSelect}
-            onSubmit={handleSubmit}
-            onNext={handleNext}
-          />
-        </div>
-
-        {/* Footer */}
-        <div className="text-center">
-          <div className="glass-card rounded-2xl p-6 max-w-md mx-auto">
-            <div className="flex items-center justify-center space-x-4 text-white/70">
-              <div className="flex items-center space-x-2">
-                <div className="w-2 h-2 bg-gimkit-success rounded-full animate-pulse"></div>
-                <span className="text-sm font-medium">
-                  Question {currentQuestionIndex + 1} of {questions.length}
-                </span>
-              </div>
-              {gameStats.streak > 0 && (
-                <div className="flex items-center space-x-2">
-                  <span className="text-sm">🔥</span>
-                  <span className="text-sm font-medium">Keep the streak going!</span>
-                </div>
-              )}
-            </div>
+          {/* Quiz Card */}
+          <div className="mb-8">
+            <QuizCard
+              question={currentQuestion}
+              selectedAnswers={selectedAnswers}
+              isAnswered={isAnswered}
+              showFeedback={showFeedback}
+              isCooldown={isCooldown}
+              onAnswerSelect={handleAnswerSelect}
+              onSubmit={handleSubmit}
+              onNext={handleNext}
+            />
           </div>
         </div>
       </div>

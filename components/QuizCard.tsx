@@ -42,33 +42,33 @@ export default function QuizCard({
                    !isCooldown;
 
   return (
-    <div className="glass-card rounded-3xl p-8 md:p-10 shadow-2xl max-w-5xl mx-auto animate-fade-in">
+    <div className="card max-w-4xl mx-auto animate-fade-in">
       {/* Question Header */}
-      <div className="mb-10">
+      <div className="mb-8">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center space-x-4">
-            <div className="question-number">
+            <div className="question-badge">
               {question.number}
             </div>
-            <div className="text-white/80 font-medium">
+            <div className="text-gimkit-text-muted font-medium">
               Question {question.number}
             </div>
           </div>
-          <div className={`px-4 py-2 rounded-full text-sm font-semibold ${
+          <div className={`px-3 py-1 rounded-full text-sm font-semibold ${
             question.type === 'single' 
-              ? 'bg-gimkit-primary/20 text-gimkit-primary border border-gimkit-primary/30' 
-              : 'bg-gimkit-secondary/20 text-gimkit-secondary border border-gimkit-secondary/30'
+              ? 'bg-gimkit-primary text-gimkit-text-light' 
+              : 'bg-gimkit-secondary text-gimkit-text-light'
           }`}>
             {question.type === 'single' ? 'Single Choice' : 'Multiple Choice'}
           </div>
         </div>
-        <h2 className="text-2xl md:text-4xl font-bold text-white leading-relaxed">
+        <h2 className="text-2xl md:text-3xl font-bold text-gimkit-text-dark leading-relaxed">
           {question.text}
         </h2>
       </div>
 
       {/* Answer Options */}
-      <div className="space-y-4 mb-10">
+      <div className="options-grid mb-8">
         {question.answers.map((answer, index) => {
           const isSelected = selectedAnswers.includes(answer.id);
           const isCorrect = showFeedback && answer.isCorrect;
@@ -92,15 +92,13 @@ export default function QuizCard({
       </div>
 
       {/* Action Buttons */}
-      <div className="flex justify-center space-x-6">
+      <div className="flex justify-center space-x-4">
         {question.type === 'multiple' && !isAnswered && (
           <button
             onClick={onSubmit}
             disabled={!canSubmit}
-            className={`px-10 py-4 rounded-2xl font-bold text-lg transition-all duration-300 transform ${
-              canSubmit
-                ? 'btn-primary hover:scale-105'
-                : 'bg-white/5 text-white/30 cursor-not-allowed border border-white/10'
+            className={`btn-primary ${
+              !canSubmit ? 'opacity-50 cursor-not-allowed' : ''
             }`}
           >
             Submit Answer
@@ -110,7 +108,7 @@ export default function QuizCard({
         {isAnswered && !isCooldown && (
           <button
             onClick={onNext}
-            className="btn-primary px-10 py-4 rounded-2xl font-bold text-lg animate-bounce-in"
+            className="btn-primary animate-bounce-in"
           >
             Next Question →
           </button>
@@ -119,15 +117,15 @@ export default function QuizCard({
 
       {/* Feedback Message */}
       {showFeedback && (
-        <div className={`mt-8 p-6 rounded-2xl text-center font-bold text-xl animate-slide-up ${
+        <div className={`mt-6 p-4 rounded-lg text-center font-bold text-lg animate-slide-up ${
           selectedAnswers.every(id => 
             question.answers.find(a => a.id === id)?.isCorrect
           ) && selectedAnswers.length === question.correctAnswers.length
-            ? 'bg-gradient-to-r from-gimkit-success/20 to-emerald-500/20 text-gimkit-success border-2 border-gimkit-success/30'
-            : 'bg-gradient-to-r from-gimkit-danger/20 to-red-500/20 text-gimkit-danger border-2 border-gimkit-danger/30'
+            ? 'bg-gimkit-accent text-gimkit-text-light'
+            : 'bg-gimkit-error text-gimkit-text-light'
         }`}>
           <div className="flex items-center justify-center space-x-3">
-            <span className="text-2xl">
+            <span className="text-xl">
               {selectedAnswers.every(id => 
                 question.answers.find(a => a.id === id)?.isCorrect
               ) && selectedAnswers.length === question.correctAnswers.length
