@@ -1,6 +1,7 @@
 'use client';
 
 import { GameStats } from '@/types';
+import { calculateAccuracy } from '@/lib/gameLogic';
 
 interface ScoreBoardProps {
   stats: GameStats;
@@ -8,7 +9,7 @@ interface ScoreBoardProps {
 }
 
 export default function ScoreBoard({ stats, className = '' }: ScoreBoardProps) {
-  const accuracy = Math.round((stats.correctAnswers / Math.max(stats.questionsAnswered, 1)) * 100);
+  const accuracy = calculateAccuracy(stats);
   
   return (
     <div className={`card ${className} animate-fade-in`}>

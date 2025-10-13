@@ -1,6 +1,7 @@
 'use client';
 
 import { GameStats } from '@/types';
+import { calculateAccuracy } from '@/lib/gameLogic';
 
 interface HeaderProps {
   stats: GameStats;
@@ -42,7 +43,7 @@ export default function Header({ stats, currentQuestion, totalQuestions }: Heade
             )}
             
             <div className="text-center">
-              <div className="text-lg font-bold">{Math.round((stats.correctAnswers / Math.max(stats.questionsAnswered, 1)) * 100)}%</div>
+              <div className="text-lg font-bold">{calculateAccuracy(stats)}%</div>
               <div className="text-xs opacity-90">Accuracy</div>
             </div>
           </div>

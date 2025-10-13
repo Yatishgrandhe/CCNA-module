@@ -70,6 +70,12 @@ export function validateAnswer(
   }
 }
 
+export function calculateAccuracy(stats: GameStats): number {
+  return stats.questionsAnswered > 0 
+    ? Math.round((stats.correctAnswers / stats.questionsAnswered) * 100)
+    : 0;
+}
+
 export const DEFAULT_GAME_SETTINGS: GameSettings = {
   baseScore: 100,
   streakBonus: 50,
