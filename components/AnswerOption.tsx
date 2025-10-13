@@ -24,29 +24,29 @@ export default function AnswerOption({
   type
 }: AnswerOptionProps) {
   const getButtonClasses = () => {
-    let baseClasses = 'w-full p-4 rounded-xl text-left transition-all duration-200 font-medium text-lg border-2 ';
+    let baseClasses = 'w-full p-5 rounded-2xl text-left transition-all duration-300 font-medium text-lg border-2 relative overflow-hidden ';
     
     if (isCooldown) {
       baseClasses += 'cursor-not-allowed opacity-50 ';
     } else if (!isAnswered) {
-      baseClasses += 'cursor-pointer hover:scale-105 hover:shadow-lg ';
+      baseClasses += 'cursor-pointer transform hover:scale-[1.02] hover:shadow-xl ';
     }
     
     if (isAnswered) {
       if (isCorrect) {
-        baseClasses += 'bg-green-500 border-green-400 text-white shadow-lg animate-pulse-green';
+        baseClasses += 'answer-correct';
       } else if (isIncorrect) {
-        baseClasses += 'bg-red-500 border-red-400 text-white shadow-lg animate-pulse-red';
+        baseClasses += 'answer-incorrect';
       } else if (answer.isCorrect) {
-        baseClasses += 'bg-green-500 border-green-400 text-white shadow-lg';
+        baseClasses += 'answer-correct';
       } else {
-        baseClasses += 'bg-gray-600 border-gray-500 text-white/70';
+        baseClasses += 'bg-white/5 border-white/10 text-white/50';
       }
     } else {
       if (isSelected) {
-        baseClasses += 'bg-gimkit-blue border-gimkit-blue text-white shadow-lg';
+        baseClasses += 'answer-selected';
       } else {
-        baseClasses += 'bg-white/10 border-white/20 text-white hover:bg-white/20 hover:border-white/40';
+        baseClasses += 'answer-default';
       }
     }
     
@@ -56,19 +56,19 @@ export default function AnswerOption({
   const getIcon = () => {
     if (type === 'single') {
       return (
-        <div className={`w-6 h-6 rounded-full border-2 mr-3 flex items-center justify-center ${
-          isSelected ? 'border-white bg-white' : 'border-white/50'
+        <div className={`w-7 h-7 rounded-full border-2 mr-4 flex items-center justify-center transition-all duration-300 ${
+          isSelected ? 'border-white bg-white shadow-lg' : 'border-white/50'
         }`}>
-          {isSelected && <div className="w-3 h-3 rounded-full bg-gimkit-blue" />}
+          {isSelected && <div className="w-4 h-4 rounded-full bg-gradient-to-r from-gimkit-primary to-gimkit-secondary" />}
         </div>
       );
     } else {
       return (
-        <div className={`w-6 h-6 rounded border-2 mr-3 flex items-center justify-center ${
-          isSelected ? 'border-white bg-white' : 'border-white/50'
+        <div className={`w-7 h-7 rounded-lg border-2 mr-4 flex items-center justify-center transition-all duration-300 ${
+          isSelected ? 'border-white bg-white shadow-lg' : 'border-white/50'
         }`}>
           {isSelected && (
-            <svg className="w-4 h-4 text-gimkit-blue" fill="currentColor" viewBox="0 0 20 20">
+            <svg className="w-5 h-5 text-gimkit-primary" fill="currentColor" viewBox="0 0 20 20">
               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
             </svg>
           )}
@@ -83,9 +83,41 @@ export default function AnswerOption({
       onClick={onClick}
       disabled={isCooldown || isAnswered}
     >
-      <div className="flex items-center">
+      {/* Shimmer effect for selected answers */}
+      {isSelected && !isAnswered && (
+        <div className="absolute inset-0 bg-shimmer bg-[length:200%_100%] animate-shimmer opacity-20"></div>
+      )}
+      
+      <div className="flex items-center relative z-10">
         {getIcon()}
-        <span className="flex-1">{answer.text}</span>
+        <span className="flex-1 leading-relaxed">{answer.text}</span>
+        
+        {/* Status indicator */}
+        {isAnswered && (
+          <div className="ml-4">
+            {isCorrect && (
+              <div className="w-6 h-6 bg-gimkit-success rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            )}
+            {isIncorrect && (
+              <div className="w-6 h-6 bg-gimkit-danger rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
+            )}
+            {answer.isCorrect && !isSelected && (
+              <div className="w-6 h-6 bg-gimkit-success rounded-full flex items-center justify-center">
+                <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </button>
   );

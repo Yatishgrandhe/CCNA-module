@@ -100,37 +100,57 @@ export default function Home() {
 
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-4xl md:text-6xl font-bold text-white mb-4 animate-bounce-in">
-            🎯 CCNA Quiz
+        <div className="text-center mb-12 animate-slide-down">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-gimkit-primary to-gimkit-secondary rounded-full mb-6 shadow-glow animate-float">
+            <span className="text-4xl">🎯</span>
+          </div>
+          <h1 className="text-5xl md:text-7xl font-bold gradient-text mb-6 animate-bounce-in">
+            CCNA Quiz
           </h1>
-          <p className="text-white/80 text-lg md:text-xl">
-            Test your networking knowledge with this interactive quiz!
+          <p className="text-white/80 text-xl md:text-2xl font-medium max-w-2xl mx-auto leading-relaxed">
+            Master networking concepts with this interactive quiz game. Challenge yourself with 69+ CCNA questions!
           </p>
         </div>
 
         {/* Score Board */}
-        <div className="mb-8">
+        <div className="mb-12">
           <ScoreBoard stats={gameStats} />
         </div>
 
         {/* Quiz Card */}
-        <QuizCard
-          question={currentQuestion}
-          selectedAnswers={selectedAnswers}
-          isAnswered={isAnswered}
-          showFeedback={showFeedback}
-          isCooldown={isCooldown}
-          onAnswerSelect={handleAnswerSelect}
-          onSubmit={handleSubmit}
-          onNext={handleNext}
-        />
+        <div className="mb-12">
+          <QuizCard
+            question={currentQuestion}
+            selectedAnswers={selectedAnswers}
+            isAnswered={isAnswered}
+            showFeedback={showFeedback}
+            isCooldown={isCooldown}
+            onAnswerSelect={handleAnswerSelect}
+            onSubmit={handleSubmit}
+            onNext={handleNext}
+          />
+        </div>
 
         {/* Footer */}
-        <div className="text-center mt-8 text-white/60 text-sm">
-          <p>Question {currentQuestionIndex + 1} of {questions.length} • Keep the streak going! 🔥</p>
+        <div className="text-center">
+          <div className="glass-card rounded-2xl p-6 max-w-md mx-auto">
+            <div className="flex items-center justify-center space-x-4 text-white/70">
+              <div className="flex items-center space-x-2">
+                <div className="w-2 h-2 bg-gimkit-success rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium">
+                  Question {currentQuestionIndex + 1} of {questions.length}
+                </span>
+              </div>
+              {gameStats.streak > 0 && (
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm">🔥</span>
+                  <span className="text-sm font-medium">Keep the streak going!</span>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

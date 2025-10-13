@@ -1,27 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
   html {
-    font-family: system-ui, sans-serif;
+    font-family: 'Inter', system-ui, sans-serif;
+    scroll-behavior: smooth;
   }
   
   body {
+    @apply bg-gradient-to-br from-gimkit-primary via-gimkit-secondary to-gimkit-accent;
+    @apply text-white antialiased;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    min-height: 100vh;
+    background-attachment: fixed;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-white/10 rounded-full;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-white/30 rounded-full hover:bg-white/50;
   }
 }
 
 @layer components {
-  .gradient-bg {
-    background: linear-gradient(135deg, #3B82F6 0%, #8B5CF6 50%, #10B981 100%);
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 shadow-2xl;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
   }
   
-  .glass-effect {
-    background: rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300 hover:bg-white/15 hover:border-white/30 hover:shadow-glow;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-gimkit-primary via-gimkit-secondary to-gimkit-accent bg-clip-text text-transparent;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-gimkit-primary to-gimkit-secondary text-white font-semibold px-6 py-3 rounded-xl shadow-lg hover:shadow-glow transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-white/10 backdrop-blur-sm text-white font-semibold px-6 py-3 rounded-xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .answer-correct {
+    @apply bg-gradient-to-r from-gimkit-success to-emerald-500 text-white border-gimkit-success shadow-lg animate-pulse-green;
+  }
+  
+  .answer-incorrect {
+    @apply bg-gradient-to-r from-gimkit-danger to-red-500 text-white border-gimkit-danger shadow-lg animate-pulse-red;
+  }
+  
+  .answer-selected {
+    @apply bg-gradient-to-r from-gimkit-primary to-gimkit-secondary text-white border-gimkit-primary shadow-glow;
+  }
+  
+  .answer-default {
+    @apply bg-white/10 backdrop-blur-sm text-white border-white/20 hover:bg-white/20 hover:border-white/40 transition-all duration-300;
+  }
+  
+  .score-glow {
+    @apply relative;
+  }
+  
+  .score-glow::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl bg-gradient-to-r from-gimkit-primary via-gimkit-secondary to-gimkit-accent opacity-20 blur-xl -z-10;
+  }
+  
+  .question-number {
+    @apply inline-flex items-center justify-center w-8 h-8 bg-gradient-to-r from-gimkit-primary to-gimkit-secondary rounded-full text-white font-bold text-sm shadow-lg;
+  }
+  
+  .streak-indicator {
+    @apply inline-flex items-center px-3 py-1 bg-gradient-to-r from-gimkit-warning to-orange-500 rounded-full text-white font-semibold text-sm shadow-lg animate-pulse;
   }
 }

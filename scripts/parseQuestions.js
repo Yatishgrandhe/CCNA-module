@@ -22,7 +22,10 @@ function parseQuestionsFromText(text) {
       // Save previous question if exists
       if (currentQuestion && currentAnswers.length > 0) {
         const questionText = currentQuestion.text || '';
-        const isMultipleChoice = questionText.includes('Choose two') || 
+        const isMultipleChoice = questionText.includes('(Choose two)') || 
+                                questionText.includes('(Choose three)') ||
+                                questionText.includes('(Choose four)') ||
+                                questionText.includes('Choose two') ||
                                 questionText.includes('Choose three') ||
                                 questionText.includes('Choose four');
         
@@ -88,7 +91,10 @@ function parseQuestionsFromText(text) {
   // Don't forget the last question
   if (currentQuestion && currentAnswers.length > 0) {
     const questionText = currentQuestion.text || '';
-    const isMultipleChoice = questionText.includes('Choose two') || 
+    const isMultipleChoice = questionText.includes('(Choose two)') || 
+                            questionText.includes('(Choose three)') ||
+                            questionText.includes('(Choose four)') ||
+                            questionText.includes('Choose two') ||
                             questionText.includes('Choose three') ||
                             questionText.includes('Choose four');
     
