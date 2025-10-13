@@ -7,6 +7,7 @@ function parseQuestionsFromText(text) {
   let currentQuestion = null;
   let currentAnswers = [];
   let answerId = 0;
+  let fullQuestionText = '';
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
@@ -21,13 +22,12 @@ function parseQuestionsFromText(text) {
     if (questionMatch) {
       // Save previous question if exists
       if (currentQuestion && currentAnswers.length > 0) {
-        const questionText = currentQuestion.text || '';
-        const isMultipleChoice = questionText.includes('(Choose two)') || 
-                                questionText.includes('(Choose three)') ||
-                                questionText.includes('(Choose four)') ||
-                                questionText.includes('Choose two') ||
-                                questionText.includes('Choose three') ||
-                                questionText.includes('Choose four');
+        const isMultipleChoice = fullQuestionText.includes('(Choose two)') || 
+                                fullQuestionText.includes('(Choose three)') ||
+                                fullQuestionText.includes('(Choose four)') ||
+                                fullQuestionText.includes('Choose two') ||
+                                fullQuestionText.includes('Choose three') ||
+                                fullQuestionText.includes('Choose four');
         
         const correctAnswers = currentAnswers
           .filter(answer => answer.isCorrect)
@@ -36,7 +36,7 @@ function parseQuestionsFromText(text) {
         questions.push({
           id: `q${currentQuestion.number}`,
           number: currentQuestion.number,
-          text: questionText,
+          text: fullQuestionText,
           type: isMultipleChoice ? 'multiple' : 'single',
           answers: currentAnswers,
           correctAnswers
@@ -51,8 +51,37 @@ function parseQuestionsFromText(text) {
         number: questionNumber,
         text: questionText
       };
+      fullQuestionText = questionText;
       currentAnswers = [];
       answerId = 0;
+      continue;
+    }
+
+    // Check if this line contains "Choose" and is part of the current question
+    if (currentQuestion && (line.includes('Choose two') || line.includes('Choose three') || line.includes('Choose four'))) {
+      fullQuestionText += ' ' + line;
+      continue;
+    }
+
+    // Check if this line contains just "Choose" (might be split across lines)
+    if (currentQuestion && line.includes('Choose') && !line.includes('Choose two') && !line.includes('Choose three') && !line.includes('Choose four')) {
+      // Look ahead to see if the next line contains the number
+      if (i + 1 < lines.length) {
+        const nextLine = lines[i + 1].trim();
+        if (nextLine.includes('two.') || nextLine.includes('three.') || nextLine.includes('four.')) {
+          fullQuestionText += ' ' + line + ' ' + nextLine;
+          i++; // Skip the next line since we've processed it
+          continue;
+        }
+      }
+      // If no next line with number, just add the current line
+      fullQuestionText += ' ' + line;
+      continue;
+    }
+
+    // Check if this line contains just a number with period (like "three.)")
+    if (currentQuestion && (line === 'two.)' || line === 'three.)' || line === 'four.)')) {
+      fullQuestionText += ' ' + line;
       continue;
     }
 
@@ -90,13 +119,12 @@ function parseQuestionsFromText(text) {
 
   // Don't forget the last question
   if (currentQuestion && currentAnswers.length > 0) {
-    const questionText = currentQuestion.text || '';
-    const isMultipleChoice = questionText.includes('(Choose two)') || 
-                            questionText.includes('(Choose three)') ||
-                            questionText.includes('(Choose four)') ||
-                            questionText.includes('Choose two') ||
-                            questionText.includes('Choose three') ||
-                            questionText.includes('Choose four');
+    const isMultipleChoice = fullQuestionText.includes('(Choose two)') || 
+                            fullQuestionText.includes('(Choose three)') ||
+                            fullQuestionText.includes('(Choose four)') ||
+                            fullQuestionText.includes('Choose two') ||
+                            fullQuestionText.includes('Choose three') ||
+                            fullQuestionText.includes('Choose four');
     
     const correctAnswers = currentAnswers
       .filter(answer => answer.isCorrect)
@@ -105,7 +133,7 @@ function parseQuestionsFromText(text) {
     questions.push({
       id: `q${currentQuestion.number}`,
       number: currentQuestion.number,
-      text: questionText,
+      text: fullQuestionText,
       type: isMultipleChoice ? 'multiple' : 'single',
       answers: currentAnswers,
       correctAnswers

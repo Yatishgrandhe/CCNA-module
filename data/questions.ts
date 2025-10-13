@@ -129,8 +129,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q6",
     "number": 6,
-    "text": "A network administrator is measuring the transfer of bits across the company",
-    "type": "single",
+    "text": "A network administrator is measuring the transfer of bits across the company factors could influence the differences in throughput? (Choose three.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -295,8 +295,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q11",
     "number": 11,
-    "text": "In addition to the cable length, what two factors could interfere with the",
-    "type": "single",
+    "text": "In addition to the cable length, what two factors could interfere with the communication carried over UTP cables? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -398,8 +398,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q14",
     "number": 14,
-    "text": "Which two statements describe the services provided by the data link layer?",
-    "type": "single",
+    "text": "Which two statements describe the services provided by the data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -564,8 +564,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q19",
     "number": 19,
-    "text": "Which two fields or features does Ethernet examine to determine if a received frame",
-    "type": "single",
+    "text": "Which two fields or features does Ethernet examine to determine if a received frame is passed to the data link layer or discarded by the NIC? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -694,8 +694,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q23",
     "number": 23,
-    "text": "What are three ways that media access control is used in networking? (Choose",
-    "type": "single",
+    "text": "What are three ways that media access control is used in networking? (Choose three.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -846,8 +846,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q27",
     "number": 27,
-    "text": "Which three basic parts are common to all frame types supported by the data link",
-    "type": "single",
+    "text": "Which three basic parts are common to all frame types supported by the data link layer? (Choose three.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1143,8 +1143,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q36",
     "number": 36,
-    "text": "A network administrator is connecting two modern switches using a straightthrough cable. The switches are new and have never been configured. Which three",
-    "type": "single",
+    "text": "A network administrator is connecting two modern switches using a straightthrough cable. The switches are new and have never been configured. Which three statements are correct about the final result of the connection? (Choose three.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1316,8 +1316,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q41",
     "number": 41,
-    "text": "Which two statements describe features or functions of the logical link control",
-    "type": "single",
+    "text": "Which two statements describe features or functions of the logical link control sublayer in Ethernet standards? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1539,8 +1539,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q49",
     "number": 49,
-    "text": "What makes fiber preferable to copper cabling for interconnecting buildings?",
-    "type": "single",
+    "text": "What makes fiber preferable to copper cabling for interconnecting buildings? (Choose three.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1861,8 +1861,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q60",
     "number": 60,
-    "text": "Which two functions are performed at the MAC sublayer of the OSI data link layer?",
-    "type": "single",
+    "text": "Which two functions are performed at the MAC sublayer of the OSI data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1898,8 +1898,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q61",
     "number": 61,
-    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer?",
-    "type": "single",
+    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1935,8 +1935,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q64",
     "number": 64,
-    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer?",
-    "type": "single",
+    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -1972,8 +1972,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q66",
     "number": 66,
-    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer?",
-    "type": "single",
+    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
@@ -2009,8 +2009,8 @@ export const QUESTIONS_DATA: Question[] = [
   {
     "id": "q68",
     "number": 68,
-    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer?",
-    "type": "single",
+    "text": "Which two functions are performed at the LLC sublayer of the OSI data link layer? (Choose two.)",
+    "type": "multiple",
     "answers": [
       {
         "id": "a0",
