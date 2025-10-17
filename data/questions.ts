@@ -188,7 +188,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q15",
     "number": 15,
     "text": "Refer to the exhibit. Match the packets with their destination IP address to the exiting interfaces on the router.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "packets with destination of 172.17.6.15 -> FastEthernet0/0", "isCorrect": true },
       { "id": "a1", "text": "packets with destination of 172.17.14.8 -> FastEthernet0/1", "isCorrect": true },
@@ -397,7 +397,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q31",
     "number": 31,
     "text": "Match the commands to the correct actions.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "displays a message after accessing the router -> Router(config)# banner motd #", "isCorrect": true },
       { "id": "a1", "text": "provides security on the console -> Router(config-line)# password class", "isCorrect": true },
@@ -422,7 +422,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q33",
     "number": 33,
     "text": "Match the description to the access method.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "remote access method that uses encryption -> SSH", "isCorrect": true },
       { "id": "a1", "text": "preferred out-of-band access method -> console", "isCorrect": true },
@@ -435,7 +435,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q34",
     "number": 34,
     "text": "Match the phases to the functions during the boot up process of a Cisco router.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "phase 1 -> perform the POST and load the bootstrap program", "isCorrect": true },
       { "id": "a1", "text": "phase 2 -> locate and load the Cisco IOS software", "isCorrect": true },
@@ -447,7 +447,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q35",
     "number": 35,
     "text": "Match the command with the device mode at which the command is entered.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "service password-encryption -> R1(config)#", "isCorrect": true },
       { "id": "a1", "text": "enable -> R1>", "isCorrect": true },
@@ -526,7 +526,7 @@ export const QUESTIONS_DATA: Question[] = [
     "id": "q41",
     "number": 41,
     "text": "Match the configuration mode with the command that is available in that mode.",
-    "type": "single",
+    "type": "multiple",
     "answers": [
       { "id": "a0", "text": "R1> -> enable", "isCorrect": true },
       { "id": "a1", "text": "R1# -> copy running-config startup-config", "isCorrect": true },
