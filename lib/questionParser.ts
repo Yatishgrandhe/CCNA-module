@@ -6,6 +6,174 @@ export function parseQuestionsFromText(text: string): Question[] {
   let currentQuestion: Partial<Question> | null = null;
   let currentAnswers: Answer[] = [];
   let answerId = 0;
+
+  // Check if this is the new format (has "Question X:" pattern)
+  const isNewFormat = text.includes('Question ') && text.includes('ANSWER:');
+  
+  if (isNewFormat) {
+    return parseNewFormat(text);
+  } else {
+    return parseOldFormat(text);
+  }
+}
+
+function parseNewFormat(text: string): Question[] {
+  const lines = text.split('\n');
+  const questions: Question[] = [];
+  let currentQuestion: Partial<Question> | null = null;
+  let currentAnswers: Answer[] = [];
+  let answerId = 0;
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i].trim();
+    
+    // Skip empty lines and headers
+    if (!line || line.includes('Module 8-10') || line.includes('CCNA1') || line.includes('Questions')) {
+      continue;
+    }
+
+    // Match "Question X:" pattern
+    const questionMatch = line.match(/^Question\s+(\d+):\s*$/i);
+    if (questionMatch) {
+      // Save previous question
+      if (currentQuestion && currentAnswers.length > 0) {
+        const questionText = currentQuestion.text || '';
+        const questionType = currentQuestion.type || 'single';
+        
+        const correctAnswers = currentAnswers
+          .filter(answer => answer.isCorrect)
+          .map(answer => answer.id);
+
+        questions.push({
+          id: `q${currentQuestion.number}`,
+          number: currentQuestion.number!,
+          text: questionText,
+          type: questionType,
+          answers: currentAnswers,
+          correctAnswers
+        });
+      }
+
+      // Start new question
+      const questionNum = parseInt(questionMatch[1]);
+      currentQuestion = {
+        number: questionNum,
+        text: '',
+        type: 'single' // Default, will be updated from next line
+      };
+      currentAnswers = [];
+      answerId = 0;
+      continue;
+    }
+
+    // Check for question type label
+    if (line.includes('(Multiple Choice - Single Answer)') || line.includes('(Single Answer)')) {
+      if (currentQuestion) {
+        currentQuestion.type = 'single';
+      }
+      continue;
+    }
+
+    if (line.includes('(Multiple Choice - Multiple Select)') || line.includes('(Multiple Select)')) {
+      if (currentQuestion) {
+        currentQuestion.type = 'multiple';
+      }
+      continue;
+    }
+
+    if (line.includes('(Matching)')) {
+      if (currentQuestion) {
+        currentQuestion.type = 'matching';
+      }
+      continue;
+    }
+
+    // Collect question text (until we hit an answer)
+    if (currentQuestion && line && !line.startsWith('ANSWER:') && !line.match(/^Question\s+\d+:/i)) {
+      // If we don't have question text yet, this is the question
+      if (!currentQuestion.text) {
+        currentQuestion.text = line;
+        continue;
+      }
+      
+      // If we already have question text, check if this is continuation or an answer
+      // Answers typically don't start with question words or contain question marks
+      const looksLikeAnswer = !line.includes('?') && 
+                               !line.match(/^(Which|What|How|Why|When|Where|Who)/i) &&
+                               line.length > 0 &&
+                               line.length < 300;
+      
+      // If it looks like answer, stop collecting question text
+      if (looksLikeAnswer && currentQuestion.text.length > 30) {
+        // This is likely an answer, don't add to question text
+        // Will be processed as answer below
+      } else if (!looksLikeAnswer) {
+        // This is question continuation
+        currentQuestion.text += ' ' + line;
+        continue;
+      }
+    }
+
+    // Check if this is a correct answer (marked with "ANSWER:")
+    if (line.startsWith('ANSWER:')) {
+      const answerText = line.substring(7).trim(); // Remove "ANSWER:"
+      if (answerText && currentQuestion) {
+        currentAnswers.push({
+          id: `a${answerId++}`,
+          text: answerText,
+          isCorrect: true
+        });
+      }
+      continue;
+    }
+
+    // Regular answer option (not marked as correct)
+    // Only process if we have a question and this line is not empty and not a question header
+    if (currentQuestion && 
+        line && 
+        !line.match(/^Question\s+\d+:/i) && 
+        !line.includes('(Multiple Choice') &&
+        !line.includes('(Single Answer)') &&
+        !line.includes('(Multiple Select)') &&
+        !line.includes('(Matching)')) {
+      // This is a wrong answer
+      currentAnswers.push({
+        id: `a${answerId++}`,
+        text: line,
+        isCorrect: false
+      });
+      continue;
+    }
+  }
+
+  // Save last question
+  if (currentQuestion && currentAnswers.length > 0) {
+    const questionText = currentQuestion.text || '';
+    const questionType = currentQuestion.type || 'single';
+    
+    const correctAnswers = currentAnswers
+      .filter(answer => answer.isCorrect)
+      .map(answer => answer.id);
+
+    questions.push({
+      id: `q${currentQuestion.number}`,
+      number: currentQuestion.number!,
+      text: questionText,
+      type: questionType,
+      answers: currentAnswers,
+      correctAnswers
+    });
+  }
+
+  return questions;
+}
+
+function parseOldFormat(text: string): Question[] {
+  const lines = text.split('\n');
+  const questions: Question[] = [];
+  let currentQuestion: Partial<Question> | null = null;
+  let currentAnswers: Answer[] = [];
+  let answerId = 0;
   let buildingQuestionText = false;
 
   for (let i = 0; i < lines.length; i++) {
