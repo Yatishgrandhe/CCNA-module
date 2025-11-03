@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -6,7 +6,11 @@ export const metadata: Metadata = {
   description: 'Master CCNA networking concepts with this interactive quiz game. Test your knowledge with 69+ questions covering OSI layers, networking media, and data link protocols.',
   keywords: 'CCNA, networking, quiz, interactive, OSI, data link, switching, cabling',
   authors: [{ name: 'CCNA Quiz Team' }],
-  viewport: 'width=device-width, initial-scale=1',
+}
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
 }
 
 export default function RootLayout({

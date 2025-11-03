@@ -68,8 +68,10 @@ export function validateAnswer(
   selectedMatches?: { leftId: string; rightId: string }[]
 ): boolean {
   if (question.type === 'single') {
-    return selectedAnswers.length === 1 && 
-           question.correctAnswers?.includes(selectedAnswers[0]);
+    if (selectedAnswers.length !== 1 || !question.correctAnswers) {
+      return false;
+    }
+    return question.correctAnswers.includes(selectedAnswers[0]);
   } else if (question.type === 'multiple') {
     // Multiple choice - must have exactly the right number of correct answers
     if (!question.correctAnswers || selectedAnswers.length !== question.correctAnswers.length) {
@@ -78,7 +80,7 @@ export function validateAnswer(
     
     // All selected answers must be correct
     return selectedAnswers.every(answerId => 
-      question.correctAnswers?.includes(answerId)
+      question.correctAnswers!.includes(answerId)
     );
   } else if (question.type === 'matching') {
     // Matching question - validate matches

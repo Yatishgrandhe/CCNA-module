@@ -23,14 +23,24 @@ export default function MatchingQuestion({
   onMatchSelect,
   onMatchRemove
 }: MatchingQuestionProps) {
+  const [selectedLeftId, setSelectedLeftId] = React.useState<string | null>(null);
+  
+  // Shuffle right items but maintain order for consistent display
+  const rightItems = React.useMemo(() => {
+    if (!question.rightItems) return [];
+    return shuffleArray([...question.rightItems]);
+  }, [question.id, question.rightItems]);
+  
+  // Reset selected left item when question changes
+  React.useEffect(() => {
+    setSelectedLeftId(null);
+  }, [question.id]);
+
   if (!question.leftItems || !question.rightItems || !question.matchingPairs) {
     return <div className="text-gimkit-error">Invalid matching question format</div>;
   }
 
-  const [selectedLeftId, setSelectedLeftId] = React.useState<string | null>(null);
   const leftItems = question.leftItems;
-  // Shuffle right items but maintain order for consistent display
-  const rightItems = React.useMemo(() => shuffleArray([...question.rightItems!]), [question.rightItems]);
 
   const handleLeftItemClick = (leftId: string) => {
     if (isAnswered || isCooldown) return;
