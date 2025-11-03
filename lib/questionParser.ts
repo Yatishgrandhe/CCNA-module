@@ -1,4 +1,4 @@
-import { Question, Answer } from '@/types';
+import { Question, Answer, MatchingPair, MatchingItem } from '@/types';
 
 export function parseQuestionsFromText(text: string): Question[] {
   const lines = text.split('\n');
@@ -19,24 +19,44 @@ export function parseQuestionsFromText(text: string): Question[] {
     const questionMatch = line.match(/^(\d+)\.\s*(.+)$/);
     if (questionMatch) {
       // Save previous question if exists
-      if (currentQuestion && currentAnswers.length > 0) {
+      if (currentQuestion) {
         const questionText = currentQuestion.text || '';
-        const isMultipleChoice = questionText.includes('Choose two') || 
-                                questionText.includes('Choose three') ||
-                                questionText.includes('Choose four');
         
-        const correctAnswers = currentAnswers
-          .filter(answer => answer.isCorrect)
-          .map(answer => answer.id);
+        // Check if this is a matching question
+        const isMatching = questionText.toLowerCase().includes('match') || 
+                          questionText.toLowerCase().includes('matching') ||
+                          questionText.toLowerCase().includes('match the');
+        
+        if (isMatching && currentQuestion.leftItems && currentQuestion.rightItems && currentQuestion.matchingPairs) {
+          // This is a matching question
+          questions.push({
+            id: `q${currentQuestion.number}`,
+            number: currentQuestion.number!,
+            text: questionText,
+            type: 'matching',
+            leftItems: currentQuestion.leftItems,
+            rightItems: currentQuestion.rightItems,
+            matchingPairs: currentQuestion.matchingPairs
+          });
+        } else if (currentAnswers.length > 0) {
+          // Regular single/multiple choice question
+          const isMultipleChoice = questionText.includes('Choose two') || 
+                                  questionText.includes('Choose three') ||
+                                  questionText.includes('Choose four');
+          
+          const correctAnswers = currentAnswers
+            .filter(answer => answer.isCorrect)
+            .map(answer => answer.id);
 
-        questions.push({
-          id: `q${currentQuestion.number}`,
-          number: currentQuestion.number!,
-          text: questionText,
-          type: isMultipleChoice ? 'multiple' : 'single',
-          answers: currentAnswers,
-          correctAnswers
-        });
+          questions.push({
+            id: `q${currentQuestion.number}`,
+            number: currentQuestion.number!,
+            text: questionText,
+            type: isMultipleChoice ? 'multiple' : 'single',
+            answers: currentAnswers,
+            correctAnswers
+          });
+        }
       }
 
       // Start new question
@@ -85,24 +105,44 @@ export function parseQuestionsFromText(text: string): Question[] {
   }
 
   // Don't forget the last question
-  if (currentQuestion && currentAnswers.length > 0) {
+  if (currentQuestion) {
     const questionText = currentQuestion.text || '';
-    const isMultipleChoice = questionText.includes('Choose two') || 
-                            questionText.includes('Choose three') ||
-                            questionText.includes('Choose four');
     
-    const correctAnswers = currentAnswers
-      .filter(answer => answer.isCorrect)
-      .map(answer => answer.id);
+    // Check if this is a matching question
+    const isMatching = questionText.toLowerCase().includes('match') || 
+                      questionText.toLowerCase().includes('matching') ||
+                      questionText.toLowerCase().includes('match the');
+    
+    if (isMatching && currentQuestion.leftItems && currentQuestion.rightItems && currentQuestion.matchingPairs) {
+      // This is a matching question
+      questions.push({
+        id: `q${currentQuestion.number}`,
+        number: currentQuestion.number!,
+        text: questionText,
+        type: 'matching',
+        leftItems: currentQuestion.leftItems,
+        rightItems: currentQuestion.rightItems,
+        matchingPairs: currentQuestion.matchingPairs
+      });
+    } else if (currentAnswers.length > 0) {
+      // Regular single/multiple choice question
+      const isMultipleChoice = questionText.includes('Choose two') || 
+                              questionText.includes('Choose three') ||
+                              questionText.includes('Choose four');
+      
+      const correctAnswers = currentAnswers
+        .filter(answer => answer.isCorrect)
+        .map(answer => answer.id);
 
-    questions.push({
-      id: `q${currentQuestion.number}`,
-      number: currentQuestion.number!,
-      text: questionText,
-      type: isMultipleChoice ? 'multiple' : 'single',
-      answers: currentAnswers,
-      correctAnswers
-    });
+      questions.push({
+        id: `q${currentQuestion.number}`,
+        number: currentQuestion.number!,
+        text: questionText,
+        type: isMultipleChoice ? 'multiple' : 'single',
+        answers: currentAnswers,
+        correctAnswers
+      });
+    }
   }
 
   return questions;

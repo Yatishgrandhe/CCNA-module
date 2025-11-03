@@ -212,4 +212,61 @@
       grid-template-columns: 1fr;
     }
   }
+
+  /* Matching question styles */
+  .matching-question-container {
+    width: 100%;
+  }
+
+  .matching-column {
+    min-height: 200px;
+  }
+
+  .matching-item {
+    background: var(--color-bg-alt);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1rem;
+    width: 100%;
+    transition: all 0.2s ease;
+    text-align: left;
+  }
+
+  .matching-item:hover {
+    border-color: var(--color-primary);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-light);
+  }
+
+  .matching-item.selected-left {
+    background: var(--color-primary);
+    color: var(--text-light);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-medium);
+  }
+
+  .matching-item.matched {
+    background: var(--color-primary);
+    color: var(--text-light);
+    border-color: var(--color-primary);
+  }
+
+  .matching-item.matched-correct {
+    background: var(--color-accent);
+    color: var(--text-light);
+    border-color: var(--color-accent);
+  }
+
+  .matching-item.matched-incorrect {
+    background: var(--color-error);
+    color: var(--text-light);
+    border-color: var(--color-error);
+  }
+
+  .matching-left-item,
+  .matching-right-item {
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+  }
 }

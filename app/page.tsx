@@ -13,6 +13,7 @@ export default function Home() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
+  const [selectedMatches, setSelectedMatches] = useState<{ leftId: string; rightId: string }[]>([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCooldown, setIsCooldown] = useState(false);
@@ -52,13 +53,36 @@ export default function Home() {
     }
   }, [currentQuestionIndex, questions, isAnswered, isCooldown]);
 
+  const handleMatchSelect = useCallback((leftId: string, rightId: string) => {
+    if (isAnswered || isCooldown) return;
+
+    setSelectedMatches(prev => {
+      // Remove any existing match for this left item
+      const filtered = prev.filter(m => m.leftId !== leftId);
+      // Remove any existing match for this right item
+      const filteredRight = filtered.filter(m => m.rightId !== rightId);
+      // Add the new match
+      return [...filteredRight, { leftId, rightId }];
+    });
+  }, [isAnswered, isCooldown]);
+
+  const handleMatchRemove = useCallback((leftId: string) => {
+    if (isAnswered || isCooldown) return;
+
+    setSelectedMatches(prev => prev.filter(m => m.leftId !== leftId));
+  }, [isAnswered, isCooldown]);
+
   const handleSubmit = useCallback(() => {
     if (isAnswered || isCooldown) return;
 
     const currentQuestion = questions[currentQuestionIndex];
     if (!currentQuestion) return;
 
-    const isCorrect = validateAnswer(currentQuestion, selectedAnswers);
+    const isCorrect = validateAnswer(
+      currentQuestion, 
+      selectedAnswers,
+      currentQuestion.type === 'matching' ? selectedMatches : undefined
+    );
     const scoreGained = calculateScore(isCorrect, gameStats.streak, DEFAULT_GAME_SETTINGS);
     
     setIsAnswered(true);
@@ -72,7 +96,7 @@ export default function Home() {
     setTimeout(() => {
       setIsCooldown(false);
     }, DEFAULT_GAME_SETTINGS.cooldownTime);
-  }, [currentQuestionIndex, questions, selectedAnswers, isAnswered, isCooldown, gameStats.streak]);
+  }, [currentQuestionIndex, questions, selectedAnswers, selectedMatches, isAnswered, isCooldown, gameStats.streak]);
 
   const handleNext = useCallback(() => {
     if (isCooldown) return;
@@ -87,6 +111,7 @@ export default function Home() {
     
     setCurrentQuestionIndex(nextIndex);
     setSelectedAnswers([]);
+    setSelectedMatches([]);
     setIsAnswered(false);
     setShowFeedback(false);
     setIsCooldown(false);
@@ -124,10 +149,13 @@ export default function Home() {
             <QuizCard
               question={currentQuestion}
               selectedAnswers={selectedAnswers}
+              selectedMatches={selectedMatches}
               isAnswered={isAnswered}
               showFeedback={showFeedback}
               isCooldown={isCooldown}
               onAnswerSelect={handleAnswerSelect}
+              onMatchSelect={currentQuestion.type === 'matching' ? handleMatchSelect : undefined}
+              onMatchRemove={currentQuestion.type === 'matching' ? handleMatchRemove : undefined}
               onSubmit={handleSubmit}
               onNext={handleNext}
             />

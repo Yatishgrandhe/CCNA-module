@@ -4,13 +4,29 @@ export interface Answer {
   isCorrect: boolean;
 }
 
+export interface MatchingPair {
+  leftId: string;
+  rightId: string;
+  leftText: string;
+  rightText: string;
+}
+
+export interface MatchingItem {
+  id: string;
+  text: string;
+}
+
 export interface Question {
   id: string;
   number: number;
   text: string;
-  type: 'single' | 'multiple';
-  answers: Answer[];
-  correctAnswers: string[];
+  type: 'single' | 'multiple' | 'matching';
+  answers?: Answer[];
+  correctAnswers?: string[];
+  // For matching questions
+  matchingPairs?: MatchingPair[];
+  leftItems?: MatchingItem[];
+  rightItems?: MatchingItem[];
 }
 
 export interface QuizState {

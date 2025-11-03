@@ -11,10 +11,22 @@ export function shuffleArray<T>(array: T[]): T[] {
 }
 
 export function shuffleQuestions(questions: Question[]): Question[] {
-  return shuffleArray(questions).map(question => ({
-    ...question,
-    answers: shuffleArray(question.answers)
-  }));
+  return shuffleArray(questions).map(question => {
+    if (question.type === 'matching' && question.rightItems) {
+      // For matching questions, shuffle the right items
+      return {
+        ...question,
+        rightItems: shuffleArray(question.rightItems)
+      };
+    } else if (question.answers) {
+      // For single/multiple choice questions, shuffle answers
+      return {
+        ...question,
+        answers: shuffleArray(question.answers)
+      };
+    }
+    return question;
+  });
 }
 
 export function calculateScore(
@@ -52,22 +64,42 @@ export function updateGameStats(
 
 export function validateAnswer(
   question: Question,
-  selectedAnswers: string[]
+  selectedAnswers: string[],
+  selectedMatches?: { leftId: string; rightId: string }[]
 ): boolean {
   if (question.type === 'single') {
     return selectedAnswers.length === 1 && 
-           question.correctAnswers.includes(selectedAnswers[0]);
-  } else {
+           question.correctAnswers?.includes(selectedAnswers[0]);
+  } else if (question.type === 'multiple') {
     // Multiple choice - must have exactly the right number of correct answers
-    if (selectedAnswers.length !== question.correctAnswers.length) {
+    if (!question.correctAnswers || selectedAnswers.length !== question.correctAnswers.length) {
       return false;
     }
     
     // All selected answers must be correct
     return selectedAnswers.every(answerId => 
-      question.correctAnswers.includes(answerId)
+      question.correctAnswers?.includes(answerId)
+    );
+  } else if (question.type === 'matching') {
+    // Matching question - validate matches
+    if (!question.matchingPairs || !selectedMatches) {
+      return false;
+    }
+
+    // Must have all matches
+    if (selectedMatches.length !== question.matchingPairs.length) {
+      return false;
+    }
+
+    // All matches must be correct
+    return selectedMatches.every(match => 
+      question.matchingPairs?.some(pair => 
+        pair.leftId === match.leftId && pair.rightId === match.rightId
+      )
     );
   }
+  
+  return false;
 }
 
 export function calculateAccuracy(stats: GameStats): number {
