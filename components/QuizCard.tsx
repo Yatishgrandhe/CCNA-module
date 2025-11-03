@@ -99,7 +99,7 @@ export default function QuizCard({
                   isIncorrect={isIncorrect}
                   isCooldown={isCooldown}
                   onClick={() => handleAnswerClick(answer.id)}
-                  type={question.type}
+                  type={question.type === 'single' ? 'single' : 'multiple'}
                 />
               </div>
             );
