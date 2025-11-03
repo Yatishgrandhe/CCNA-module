@@ -67,28 +67,36 @@ export default function MatchingQuestion({
 
   const getLeftItemStatus = (leftId: string) => {
     const match = selectedMatches.find(m => m.leftId === leftId);
-    if (!match) return null;
     
-    if (showFeedback && question.matchingPairs) {
+    // Before submission, only show if matched (no correct/incorrect)
+    if (!showFeedback) {
+      return match ? 'matched' : null;
+    }
+    
+    // After submission, show correct/incorrect
+    if (match && question.matchingPairs) {
       const correctPair = question.matchingPairs.find(
         p => p.leftId === leftId && p.rightId === match.rightId
       );
       return correctPair ? 'correct' : 'incorrect';
     }
-    return 'matched';
+    return null;
   };
 
   const getRightItemStatus = (rightId: string) => {
+    // Don't show any status until after submission with feedback
+    if (!showFeedback) return null;
+    
     const match = selectedMatches.find(m => m.rightId === rightId);
     if (!match) return null;
     
-    if (showFeedback && question.matchingPairs) {
+    if (question.matchingPairs) {
       const correctPair = question.matchingPairs.find(
         p => p.leftId === match.leftId && p.rightId === rightId
       );
       return correctPair ? 'correct' : 'incorrect';
     }
-    return 'matched';
+    return null;
   };
 
   const getLeftItemClasses = (leftId: string) => {
@@ -100,7 +108,7 @@ export default function MatchingQuestion({
       classes += 'cursor-pointer hover:bg-gimkit-hover ';
     }
 
-    if (selectedLeftId === leftId) {
+    if (selectedLeftId === leftId && !isAnswered) {
       classes += 'selected-left ';
     }
 
@@ -109,7 +117,8 @@ export default function MatchingQuestion({
       classes += 'matched-correct ';
     } else if (status === 'incorrect') {
       classes += 'matched-incorrect ';
-    } else if (status === 'matched') {
+    } else if (status === 'matched' && !isAnswered) {
+      // Only show matched styling before submission
       classes += 'matched ';
     }
 
@@ -130,9 +139,8 @@ export default function MatchingQuestion({
       classes += 'matched-correct ';
     } else if (status === 'incorrect') {
       classes += 'matched-incorrect ';
-    } else if (status === 'matched') {
-      classes += 'matched ';
     }
+    // Don't show matched styling before submission - keep right items neutral
 
     return classes;
   };
@@ -163,19 +171,20 @@ export default function MatchingQuestion({
                     <div className="flex items-center justify-between w-full">
                       <span className="font-medium">{item.text}</span>
                       <div className="flex items-center space-x-2">
-                        {connectedRightId && (
+                        {connectedRightId && !isAnswered && (
                           <div className="text-sm text-gimkit-primary font-semibold">
                             →
                           </div>
                         )}
-                        {getLeftItemStatus(item.id) === 'correct' && (
+                        {/* Only show feedback after submission */}
+                        {isAnswered && getLeftItemStatus(item.id) === 'correct' && (
                           <div className="w-5 h-5 bg-gimkit-accent rounded-full flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                             </svg>
                           </div>
                         )}
-                        {getLeftItemStatus(item.id) === 'incorrect' && (
+                        {isAnswered && getLeftItemStatus(item.id) === 'incorrect' && (
                           <div className="w-5 h-5 bg-gimkit-error rounded-full flex items-center justify-center">
                             <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                               <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -194,7 +203,7 @@ export default function MatchingQuestion({
         {/* Right Column */}
         <div className="matching-column">
           <h3 className="text-lg font-semibold text-gimkit-text-dark mb-4 text-center">
-            Matches
+            Options (shuffled)
           </h3>
           <div className="space-y-3">
             {rightItems.map((item) => {
@@ -208,21 +217,22 @@ export default function MatchingQuestion({
                   >
                     <div className="flex items-center justify-between w-full">
                       <div className="flex items-center space-x-2">
-                        {connectedLeftId && (
+                        {connectedLeftId && !isAnswered && (
                           <div className="text-sm text-gimkit-primary font-semibold">
                             ←
                           </div>
                         )}
                         <span className="font-medium">{item.text}</span>
                       </div>
-                      {getRightItemStatus(item.id) === 'correct' && (
+                      {/* Only show feedback after submission */}
+                      {isAnswered && getRightItemStatus(item.id) === 'correct' && (
                         <div className="w-5 h-5 bg-gimkit-accent rounded-full flex items-center justify-center">
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                           </svg>
                         </div>
                       )}
-                      {getRightItemStatus(item.id) === 'incorrect' && (
+                      {isAnswered && getRightItemStatus(item.id) === 'incorrect' && (
                         <div className="w-5 h-5 bg-gimkit-error rounded-full flex items-center justify-center">
                           <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
@@ -242,8 +252,8 @@ export default function MatchingQuestion({
       {!isAnswered && (
         <div className="mt-6 text-center text-sm text-gimkit-text-muted">
           {selectedLeftId 
-            ? 'Click an item on the right to match it with the selected item.'
-            : 'Click an item on the left, then click its match on the right.'}
+            ? 'Click an option on the right to match it with the selected item on the left.'
+            : 'Click an item on the left, then click its corresponding match on the right. All items must be matched before submitting.'}
         </div>
       )}
     </div>
