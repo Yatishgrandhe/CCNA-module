@@ -23,6 +23,9 @@ function parseNewFormat(text: string): Question[] {
   let currentQuestion: Partial<Question> | null = null;
   let currentAnswers: Answer[] = [];
   let answerId = 0;
+  let leftItems: MatchingItem[] = [];
+  let rightItems: MatchingItem[] = [];
+  let matchingPairs: MatchingPair[] = [];
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i].trim();
@@ -36,22 +39,36 @@ function parseNewFormat(text: string): Question[] {
     const questionMatch = line.match(/^Question\s+(\d+):\s*$/i);
     if (questionMatch) {
       // Save previous question
-      if (currentQuestion && currentAnswers.length > 0) {
+      if (currentQuestion) {
         const questionText = currentQuestion.text || '';
         const questionType = currentQuestion.type || 'single';
         
-        const correctAnswers = currentAnswers
-          .filter(answer => answer.isCorrect)
-          .map(answer => answer.id);
+        if (questionType === 'matching' && leftItems.length > 0 && rightItems.length > 0) {
+          // This is a matching question
+          questions.push({
+            id: `q${currentQuestion.number}`,
+            number: currentQuestion.number!,
+            text: questionText,
+            type: 'matching',
+            leftItems: leftItems,
+            rightItems: rightItems,
+            matchingPairs: matchingPairs
+          });
+        } else if (currentAnswers.length > 0) {
+          // Regular single/multiple choice question
+          const correctAnswers = currentAnswers
+            .filter(answer => answer.isCorrect)
+            .map(answer => answer.id);
 
-        questions.push({
-          id: `q${currentQuestion.number}`,
-          number: currentQuestion.number!,
-          text: questionText,
-          type: questionType,
-          answers: currentAnswers,
-          correctAnswers
-        });
+          questions.push({
+            id: `q${currentQuestion.number}`,
+            number: currentQuestion.number!,
+            text: questionText,
+            type: questionType,
+            answers: currentAnswers,
+            correctAnswers
+          });
+        }
       }
 
       // Start new question
@@ -62,6 +79,9 @@ function parseNewFormat(text: string): Question[] {
         type: 'single' // Default, will be updated from next line
       };
       currentAnswers = [];
+      leftItems = [];
+      rightItems = [];
+      matchingPairs = [];
       answerId = 0;
       continue;
     }
@@ -88,8 +108,50 @@ function parseNewFormat(text: string): Question[] {
       continue;
     }
 
+    // Check if this is a matching pair format: "left item -> ANSWER: right item"
+    // Also handles formats like "-phase 1 -> ANSWER: ..." or "phase 1 -> ANSWER: ..."
+    if (currentQuestion && currentQuestion.type === 'matching' && line.includes('-> ANSWER:')) {
+      // Match format: "left item -> ANSWER: right item" (with optional leading dash or hyphen)
+      const match = line.match(/^[-]?\s*(.+?)\s*->\s*ANSWER:\s*(.+)$/);
+      if (match) {
+        const leftText = match[1].trim();
+        const rightText = match[2].trim();
+        
+        // Find or create left item
+        let leftItem = leftItems.find(item => item.text === leftText);
+        if (!leftItem) {
+          const leftId = `left_${leftItems.length + 1}`;
+          leftItem = { id: leftId, text: leftText };
+          leftItems.push(leftItem);
+        }
+        
+        // Find or create right item
+        let rightItem = rightItems.find(item => item.text === rightText);
+        if (!rightItem) {
+          const rightId = `right_${rightItems.length + 1}`;
+          rightItem = { id: rightId, text: rightText };
+          rightItems.push(rightItem);
+        }
+        
+        // Create matching pair if it doesn't exist
+        const pairExists = matchingPairs.some(
+          pair => pair.leftId === leftItem!.id && pair.rightId === rightItem!.id
+        );
+        
+        if (!pairExists) {
+          matchingPairs.push({
+            leftId: leftItem.id,
+            rightId: rightItem.id,
+            leftText: leftText,
+            rightText: rightText
+          });
+        }
+      }
+      continue;
+    }
+
     // Collect question text (until we hit an answer)
-    if (currentQuestion && line && !line.startsWith('ANSWER:') && !line.match(/^Question\s+\d+:/i)) {
+    if (currentQuestion && line && !line.startsWith('ANSWER:') && !line.match(/^Question\s+\d+:/i) && !line.includes('->')) {
       // If we don't have question text yet, this is the question
       if (!currentQuestion.text) {
         currentQuestion.text = line;
@@ -115,7 +177,7 @@ function parseNewFormat(text: string): Question[] {
     }
 
     // Check if this is a correct answer (marked with "ANSWER:")
-    if (line.startsWith('ANSWER:')) {
+    if (line.startsWith('ANSWER:') && currentQuestion?.type !== 'matching') {
       const answerText = line.substring(7).trim(); // Remove "ANSWER:"
       if (answerText && currentQuestion) {
         currentAnswers.push({
@@ -147,22 +209,36 @@ function parseNewFormat(text: string): Question[] {
   }
 
   // Save last question
-  if (currentQuestion && currentAnswers.length > 0) {
+  if (currentQuestion) {
     const questionText = currentQuestion.text || '';
     const questionType = currentQuestion.type || 'single';
     
-    const correctAnswers = currentAnswers
-      .filter(answer => answer.isCorrect)
-      .map(answer => answer.id);
+    if (questionType === 'matching' && leftItems.length > 0 && rightItems.length > 0) {
+      // This is a matching question
+      questions.push({
+        id: `q${currentQuestion.number}`,
+        number: currentQuestion.number!,
+        text: questionText,
+        type: 'matching',
+        leftItems: leftItems,
+        rightItems: rightItems,
+        matchingPairs: matchingPairs
+      });
+    } else if (currentAnswers.length > 0) {
+      // Regular single/multiple choice question
+      const correctAnswers = currentAnswers
+        .filter(answer => answer.isCorrect)
+        .map(answer => answer.id);
 
-    questions.push({
-      id: `q${currentQuestion.number}`,
-      number: currentQuestion.number!,
-      text: questionText,
-      type: questionType,
-      answers: currentAnswers,
-      correctAnswers
-    });
+      questions.push({
+        id: `q${currentQuestion.number}`,
+        number: currentQuestion.number!,
+        text: questionText,
+        type: questionType,
+        answers: currentAnswers,
+        correctAnswers
+      });
+    }
   }
 
   return questions;
