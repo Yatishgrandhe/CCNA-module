@@ -6,8 +6,10 @@ import { shuffleQuestions, validateAnswer, calculateScore, updateGameStats, DEFA
 import QuizCard from '@/components/QuizCard';
 import ScoreBoard from '@/components/ScoreBoard';
 import Header from '@/components/Header';
+import QuestionFilters, { QuestionFilters as QuestionFiltersType } from '@/components/QuestionFilters';
 
 export default function Home() {
+  const [allQuestions, setAllQuestions] = useState<Question[]>([]);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
@@ -16,6 +18,7 @@ export default function Home() {
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCooldown, setIsCooldown] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [showFilters, setShowFilters] = useState(true);
   const [gameStats, setGameStats] = useState<GameStats>({
     score: 0,
     streak: 0,
@@ -48,8 +51,7 @@ export default function Home() {
         const loadedQuestions = data.questions as Question[];
         
         if (loadedQuestions.length > 0) {
-          const shuffledQuestions = shuffleQuestions(loadedQuestions);
-          setQuestions(shuffledQuestions);
+          setAllQuestions(loadedQuestions);
           setGameStats(prev => ({
             ...prev,
             totalQuestions: loadedQuestions.length
@@ -68,6 +70,34 @@ export default function Home() {
 
     loadQuestions();
   }, []);
+
+  // Handle filter application
+  const handleStartQuiz = useCallback((filters: QuestionFiltersType) => {
+    const filteredQuestions = allQuestions.filter(q => {
+      if (q.type === 'single' && filters.single) return true;
+      if (q.type === 'multiple' && filters.multiple) return true;
+      if (q.type === 'matching' && filters.matching) return true;
+      return false;
+    });
+
+    if (filteredQuestions.length > 0) {
+      const shuffledQuestions = shuffleQuestions(filteredQuestions);
+      setQuestions(shuffledQuestions);
+      setGameStats(prev => ({
+        ...prev,
+        totalQuestions: filteredQuestions.length,
+        timeStarted: Date.now()
+      }));
+      setShowFilters(false);
+      setCurrentQuestionIndex(0);
+      setSelectedAnswers([]);
+      setSelectedMatches([]);
+      setIsAnswered(false);
+      setShowFeedback(false);
+    } else {
+      alert('No questions match your selected filters. Please select at least one question type.');
+    }
+  }, [allQuestions]);
 
   const handleAnswerSelect = useCallback((answerId: string) => {
     if (isAnswered || isCooldown) return;
@@ -133,6 +163,10 @@ export default function Home() {
     }, DEFAULT_GAME_SETTINGS.cooldownTime);
   }, [currentQuestionIndex, questions, selectedAnswers, selectedMatches, isAnswered, isCooldown, gameStats.streak]);
 
+  const handleChangeFilters = useCallback(() => {
+    setShowFilters(true);
+  }, []);
+
   const handleNext = useCallback(() => {
     if (isCooldown) return;
 
@@ -152,7 +186,12 @@ export default function Home() {
     setIsCooldown(false);
   }, [currentQuestionIndex, questions.length, isCooldown]);
 
-  const currentQuestion = questions[currentQuestionIndex];
+  // Calculate question counts by type
+  const questionCounts = {
+    single: allQuestions.filter(q => q.type === 'single').length,
+    multiple: allQuestions.filter(q => q.type === 'multiple').length,
+    matching: allQuestions.filter(q => q.type === 'matching').length
+  };
 
   if (isLoading) {
     return (
@@ -162,10 +201,42 @@ export default function Home() {
     );
   }
 
+  if (showFilters) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+        <Header 
+          stats={gameStats}
+          currentQuestion={0}
+          totalQuestions={0}
+        />
+        <QuestionFilters
+          onStart={handleStartQuiz}
+          totalQuestions={allQuestions.length}
+          questionCounts={questionCounts}
+        />
+      </div>
+    );
+  }
+
+  const currentQuestion = questions[currentQuestionIndex];
+
   if (!currentQuestion || questions.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gimkit-bg">
-        <div className="text-gimkit-error text-xl">No questions available. Please check the questions file.</div>
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 via-blue-50 to-indigo-50">
+        <Header 
+          stats={gameStats}
+          currentQuestion={0}
+          totalQuestions={0}
+        />
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="text-gimkit-error text-xl mb-4">No questions available.</div>
+          <button
+            onClick={handleChangeFilters}
+            className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors font-semibold"
+          >
+            Change Filters
+          </button>
+        </div>
       </div>
     );
   }
