@@ -1,0 +1,54 @@
+1. Which information is used by routers to forward a data packet toward its destination? o o
+o
+
+! ! source IP address o ! destination IP address o source data-link address o destination data-link address
+
+5. A computer can access devices on the same network but cannot access devices on other networks. What is the probable cause of this problem? o o
+o
+
+! ! The cable is not connected properly to the NIC. o o ! The computer has an invalid IP address. o The computer has an incorrect subnet mask. o The computer has an invalid default gateway address.
+
+6. Which statement describes a feature of the IP protocol? o o
+o
+
+! ! IP encapsulation is modified based on network media. o o ! IP relies on Layer 2 protocols for transmission error control. o o ! MAC addresses are used during the IP packet encapsulation. o ! IP relies on upper layer services to handle situations of missing or out-of-order o ! packets. o ! end-to-end delivery. It does not provide error control in the cases where receiving packets o ! are out-of-order or in cases of missing packets. It relies on upper layer services, such as o ! TCP, to resolve these issues.
+
+7. Why is NAT not needed in IPv6? o o
+o
+
+! ! Because IPv6 has integrated security, there is no need to hide the IPv6 addresses of o ! internal networks. o ! Any host or user can get a public IPv6 network address because the number of o ! available IPv6 addresses is extremely large. o o ! The problems that are induced by NAT applications are solved because the IPv6 o ! header improves packet handling by intermediate routers. o o ! The end-to-end connectivity problems that are caused by NAT are solved because o ! the number of routes increases with the number of nodes that are connected to the o ! Internet. o ! from the largest enterprises to single households can get public IPv6 network addresses. o ! This avoids some of the NAT-induced application problems that are experienced by o ! applications that require end-to-end connectivity.
+
+10. Within a production network, what is the purpose of configuring a switch with a default gateway address? o o
+o
+
+! ! Hosts that are connected to the switch can use the switch default gateway address o ! to forward packets to a remote destination. o o ! A switch must have a default gateway to be accessible by Telnet and SSH. o ! The default gateway address is used to forward packets originating from the o ! switch to remote networks. o o ! It provides a next-hop address for all traffic that flows through the switch. o ! on the switch to remote networks. A default gateway address on a switch does not provide o ! Layer 3 routing for PCs that are connected on that switch. A switch can still be accessible o ! from Telnet as long as the source of the Telnet connection is on the local network.
+
+12. Which field in the IPv4 header is used to prevent a packet from traversing a network endlessly? o o
+o
+
+! ! ! Time-to-Live o o ! Sequence Number o o ! Acknowledgment Number o o ! Differentiated Services o ! lifetime of a packet. The sending host sets the initial TTL value; which is decreased by one o ! each time the packet is processed by a router. If the TTL field decrements to zero, the router o ! discards the packet and sends an Internet Control Message Protocol (ICMP) Time o ! Exceeded message to the source IP address. The Differentiated Services (DS) field is used o ! to determine the priority of each packet. Sequence Number and Acknowledgment Number o ! are two fields in the TCP header.
+
+13. What is one advantage that the IPv6 simplified header offers over IPv4? o o
+o
+
+! ! smaller-sized header o little requirement for processing checksums o smaller-sized source and destination IP addresses o ! efficient packet handling o o ! Better routing efficiency and efficient packet handling for performance and o ! forwarding-rate scalability o o ! No requirement for processing checksums o o ! Simplified and more efficient extension header mechanisms (as opposed to the o ! IPv4 Options field) o o ! A Flow Label field for per-flow processing with no need to open the transport inner o ! packet to identify the various traffic flows
+
+14. What IPv4 header field identifies the upper layer protocol carried in the packet? o o
+o
+
+! ! ! Protocol o o ! Identification o o ! Version o o ! Differentiated Services o ! the packet is carrying. The Version field identifies the IP version. The Differential Services o ! field is used for setting packet priority. The Identification field is used to reorder fragmented o ! packets.
+
+172. 17.14.8 are forwarded through Fa0/1. Because network 172.17.8.0 has no entry in the o o
+o
+
+! ! ! routing table, it will take the gateway of last resort, which means that packets with a o ! destination of 172.17.8.20 are forwarded through Serial0/0/0. Because a gateway of last o ! resort exists, no packets will be dropped.
+
+16. What information does the loopback test provide? o o
+o
+
+! ! ! The TCP/IP stack on the device is working correctly. o o ! The device has end-to-end connectivity. o o ! DHCP is working correctly. o o ! The Ethernet cable is working correctly. o o ! The device has the correct IP address on the network. o ! provide information about network connectivity to other hosts. The loopback test verifies o ! that the host NIC, drivers, and TCP/IP stack are functioning.
+
+17. What routing table entry has a next hop address associated with a destination network? o o
+o
+
+! ! directly-connected routes o local routes o ! remote routes o o ! Cand L source routes o ! next hop IP address is the address of the router interface of the next device to be used to o ! reach the destination network. Directly-connected and local routes have no next hop, o ! because they do not require going through another router to be reached.

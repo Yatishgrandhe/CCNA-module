@@ -7,8 +7,6 @@ import QuizCard from '@/components/QuizCard';
 import ScoreBoard from '@/components/ScoreBoard';
 import Header from '@/components/Header';
 
-import { QUESTIONS_DATA } from '@/data/questions';
-
 export default function Home() {
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -17,21 +15,58 @@ export default function Home() {
   const [isAnswered, setIsAnswered] = useState(false);
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCooldown, setIsCooldown] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [gameStats, setGameStats] = useState<GameStats>({
     score: 0,
     streak: 0,
     bestStreak: 0,
     questionsAnswered: 0,
     correctAnswers: 0,
-    totalQuestions: QUESTIONS_DATA.length,
+    totalQuestions: 0,
     averageScore: 0,
     timeStarted: Date.now()
   });
 
-  // Initialize questions on mount
+  // Initialize questions on mount - load from file
   useEffect(() => {
-    const shuffledQuestions = shuffleQuestions(QUESTIONS_DATA);
-    setQuestions(shuffledQuestions);
+    const loadQuestions = async () => {
+      try {
+        setIsLoading(true);
+        // Try module 8-10 first, fallback to 4-7
+        let response = await fetch('/api/questions?module=8-10');
+        if (!response.ok) {
+          // Fallback to module 4-7
+          response = await fetch('/api/questions?module=4-7');
+        }
+        
+        if (!response.ok) {
+          const errorData = await response.json().catch(() => ({ error: 'Failed to load questions' }));
+          throw new Error(errorData.error || 'Failed to load questions');
+        }
+        
+        const data = await response.json();
+        const loadedQuestions = data.questions as Question[];
+        
+        if (loadedQuestions.length > 0) {
+          const shuffledQuestions = shuffleQuestions(loadedQuestions);
+          setQuestions(shuffledQuestions);
+          setGameStats(prev => ({
+            ...prev,
+            totalQuestions: loadedQuestions.length
+          }));
+        } else {
+          throw new Error('No questions found in the file');
+        }
+      } catch (error) {
+        console.error('Error loading questions:', error);
+        // Show error to user
+        alert(`Error loading questions: ${error instanceof Error ? error.message : 'Unknown error'}\n\nPlease ensure the question files are in the project directory.`);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadQuestions();
   }, []);
 
   const handleAnswerSelect = useCallback((answerId: string) => {
@@ -104,8 +139,8 @@ export default function Home() {
     const nextIndex = (currentQuestionIndex + 1) % questions.length;
     
     // If we've completed all questions, reshuffle
-    if (nextIndex === 0 && currentQuestionIndex === questions.length - 1) {
-      const reshuffledQuestions = shuffleQuestions(QUESTIONS_DATA);
+    if (nextIndex === 0 && currentQuestionIndex === questions.length - 1 && questions.length > 0) {
+      const reshuffledQuestions = shuffleQuestions(questions);
       setQuestions(reshuffledQuestions);
     }
     
@@ -119,10 +154,18 @@ export default function Home() {
 
   const currentQuestion = questions[currentQuestionIndex];
 
-  if (!currentQuestion) {
+  if (isLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-white text-xl">Loading questions...</div>
+      <div className="min-h-screen flex items-center justify-center bg-gimkit-bg">
+        <div className="text-gimkit-text-dark text-xl">Loading questions...</div>
+      </div>
+    );
+  }
+
+  if (!currentQuestion || questions.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gimkit-bg">
+        <div className="text-gimkit-error text-xl">No questions available. Please check the questions file.</div>
       </div>
     );
   }
